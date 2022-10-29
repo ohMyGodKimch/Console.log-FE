@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const TextArea = styled.div`
+export const TextArea = styled.textarea`
 	background-color: ${({ bgc }) => (bgc ? bgc : "")};
 	width: ${({ width }) => (width ? width : "")};
 	padding: ${({ pd }) => (pd ? pd : "")};
