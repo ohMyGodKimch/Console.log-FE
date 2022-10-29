@@ -13,15 +13,17 @@ const initialState = {
 
 // User Id Exist Check
 export const __isIdExist = createAsyncThunk(
-	"join/requestSignUp",
+	"join/isIdExist",
 	async (payload, thunkAPI) => {
 		try {
-			console.log("requestSignUp payload =>", payload);
-			const response = await axios.post("", payload);
-			console.log("requestSignUp response.data =>", response);
+			const response = await axios.post(
+				`${BASE_URL}/member/check-name`,
+				payload,
+			);
+			console.log("requestSignIn response =>", response);
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
-			console.log("requestSignUp error =>", error);
+			console.log("requestSignIn error =>", error);
 			return thunkAPI.rejectWithValue(error.response.data);
 		}
 	},
