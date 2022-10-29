@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const Text = styled.div`
+export const Text = styled.p`
 	display: ${({ dp }) => (dp ? dp : "")};
 	background-color: ${({ bgc }) => (bgc ? bgc : "")};
 	width: ${({ width }) => (width ? width : "")};
