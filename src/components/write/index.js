@@ -1,3 +1,3 @@
 import Write from "./Write";
 
-export default Write;
+export { Write };

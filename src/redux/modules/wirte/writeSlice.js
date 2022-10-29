@@ -9,7 +9,11 @@ export const __postWrite = createAsyncThunk(
 	"postWrite",
 	async (payload, thunkAPI) => {
 		try {
-			const response = await axios.post(`${BASE_URL}boadrs`, payload);
+			// const response = await axios.post(`${BASE_URL}/boadrs`, payload);
+			const response = await axios.post(
+				"http://localhost:8080/boadrs",
+				payload,
+			);
 			console.log(payload);
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
