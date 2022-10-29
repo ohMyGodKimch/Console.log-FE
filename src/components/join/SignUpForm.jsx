@@ -6,6 +6,8 @@ import {
 	__isIdExist,
 	__isNicknameExist,
 	__requestSignUp,
+	resetIdCheck,
+	resetNicknameCheck,
 } from "../../redux/modules/join/joinSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,11 +17,10 @@ const SignUpForm = () => {
 	const dispatch = useDispatch();
 	// Redux state
 	const { isCheckedNickname, isCheckedId } = useSelector(state => state.join);
-	const join = useSelector(state => state.join);
-	console.log(join);
 	console.log(
-		"isCheckedNickname, isChekedId =>",
+		"isCheckedNickname =>",
 		isCheckedNickname,
+		"isChekedId =>",
 		isCheckedId,
 	);
 	// React Hook Form
@@ -38,7 +39,9 @@ const SignUpForm = () => {
 	const password = useRef();
 	password.current = watch("password");
 	// 알림창
-	const notify = () => toast.error("아이디와 닉네임 중복체크를 해주세요");
+	const idAlert = () => toast.error("아이디 중복체크를 해주세요.");
+	const nickNameAlert = () => toast.error("닉네임 중복체크를 해주세요.");
+	const bothAlert = () => toast.error("닉네임과 아이디 중복체크를 해주세요.");
 
 	return (
 		<>
@@ -49,16 +52,20 @@ const SignUpForm = () => {
 						console.log("values =>", values);
 						if (isCheckedId && isCheckedNickname) {
 							const { nickname, id, password } = values;
+						} else if (!isCheckedId && !isCheckedNickname) {
+							bothAlert();
 						} else if (!isCheckedId) {
-							notify("아이디 중복체크를 해주세요");
+							idAlert();
 						} else if (!isCheckedNickname) {
-							notify("닉네임 중복체크를 해주세요");
+							nickNameAlert();
 						}
 					})}
 				>
 					<Input
+						placeholder="nickname"
 						{...register("nickname", { required: true })}
 						onChange={e => {
+							dispatch(resetNicknameCheck());
 							setInputValue(prev => {
 								return {
 									...prev,
@@ -68,8 +75,10 @@ const SignUpForm = () => {
 						}}
 					/>
 					{errors.nickname && <Text>닉네임을 입력해주세요.</Text>}
+					{isCheckedNickname ? <Text>사용할 수 있는 닉네임입니다.</Text> : ""}
 					<Button
-						disable={isCheckedNickname}
+						type="button"
+						disabled={isCheckedNickname}
 						onClick={() => {
 							dispatch(__isNicknameExist(inputValue.nickNameValue));
 						}}
@@ -77,11 +86,13 @@ const SignUpForm = () => {
 						증복 확인
 					</Button>
 					<Input
+						placeholder="id"
 						{...register("id", {
 							required: true,
 							pattern: /^(?=.*[a-zA-Z])[-a-zA-Z0-9]{4,10}$/,
 						})}
 						onChange={e => {
+							dispatch(resetIdCheck());
 							setInputValue(prev => {
 								return {
 									...prev,
@@ -96,15 +107,19 @@ const SignUpForm = () => {
 					{errors.id && errors.id.type === "pattern" && (
 						<Text>4~10자의 영문 대,소문자를 필수로 입력해주세요.</Text>
 					)}
+					{isCheckedId ? <Text>사용할 수 있는 아이디입니다.</Text> : ""}
 					<Button
-						disable={isCheckedId}
+						type="button"
+						disabled={isCheckedId}
 						onClick={() => {
 							dispatch(__isIdExist(inputValue.idValue));
 						}}
 					>
 						중복 확인
 					</Button>
+
 					<Input
+						placeholder="password"
 						{...register("password", {
 							required: true,
 							pattern: /^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/,
@@ -119,6 +134,7 @@ const SignUpForm = () => {
 						</Text>
 					)}
 					<Input
+						placeholder="password confirm"
 						{...register("passwordConfirm", {
 							required: true,
 							validate: value => value === password.current,

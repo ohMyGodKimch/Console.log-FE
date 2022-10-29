@@ -1,10 +1,10 @@
 import { Flex } from "../../common";
-import { SignUpForm } from "../../components/join";
+import { SignInForm } from "../../components/join";
 
 const SignInPage = () => {
 	return (
 		<Flex>
-			<SignUpForm />
+			<SignInForm />
 		</Flex>
 	);
 };
