@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import JoinLayout from "../layout/join";
-import Write from "../components/write/Write"
+import { Write } from "../components";
+
 const Router = () => {
 	return (
 		<>
