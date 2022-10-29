@@ -1,47 +1,51 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { __postWrite } from "../../redux/modules/wirte/writeSlice";
 
 function Write() {
+	const { write } = useSelector(state => state.write);
+	console.log(write);
 	const dispatch = useDispatch();
-	const [input, setInput] = useState({
-		title: "",
-		content: "",
-	});
+	const [title, setTitle] = useState();
+	const [content, setContent] = useState();
 
-	const onCHangeHandler = e => {
-		const { name, value } = e.target;
-		setInput(prev => {
-			return { ...prev, [name]: value };
-		});
+	// const id = new Date();
+	const input = {
+		title,
+		content,
 	};
 
-	const handleAddInput = e => {
+	const onSubmitHandler = e => {
 		e.preventDefault();
+		dispatch(__postWrite(input));
+		console.log(input);
 	};
 
 	return (
 		<>
-			<wrap>
-				<form onsubmit={e => handleAddInput(e)}>
-					<label>제목</label>
-					<input
-						type="text"
-						name="title"
-						value={input.title}
-						onchange={onCHangeHandler}
-					/>
-					<br />
-					<label>내용</label>
-					<input
-						type="text"
-						name="content"
-						value={input.content}
-						onchange={onCHangeHandler}
-					/>
-					<br />
-					<button type="submit">출간하기</button>
-				</form>
-			</wrap>
+			<form onSubmit={e => onSubmitHandler(e)}>
+				<label>제목</label>
+				<input
+					type="text"
+					name="title"
+					value={title || ""}
+					onChange={e => {
+						setTitle(e.target.value);
+					}}
+				/>
+				<br />
+				<label>내용</label>
+				<input
+					type="text"
+					name="content"
+					value={content || ""}
+					onChange={e => {
+						setContent(e.target.value);
+					}}
+				/>
+				<br />
+				<button type="submit">출간하기</button>
+			</form>
 		</>
 	);
 }

@@ -2,26 +2,27 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_SERVER;
-
-const initialState = {
-	write: {
-		data: [],
-		isLoding: false,
-		error: null,
-	},
-};
+//localhost:8080/
+// http://13.125.106.163:8080/
 
 export const __postWrite = createAsyncThunk(
 	"postWrite",
 	async (payload, thunkAPI) => {
 		try {
-			const response = await axios.post(`${BASE_URL}/boards`, payload);
+			const response = await axios.post(`${BASE_URL}boadrs`, payload);
+			console.log(payload);
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
+			return thunkAPI.rejectWithValue(error.respone.data);
 		}
 	},
 );
+
+const initialState = {
+	write: [],
+	isLoding: false,
+	error: null,
+};
 
 export const writeSlice = createSlice({
 	name: "write",
@@ -33,10 +34,9 @@ export const writeSlice = createSlice({
 		},
 		[__postWrite.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			console.log(action.payload);
-			state.write.push(action.payload);
+			state.write = action.payload;
 		},
-		[__postWrite.rejected]: (state, action) => {
+		[__postWrite.rejected]: state => {
 			state.isLoading = false;
 		},
 	},

@@ -1,9 +1,24 @@
 {
-  "posts": [
+  "boadrs": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "id": "2022-10-29T06:34:28.906Z",
+      "title": "asd",
+      "content": "asd"
+    },
+    {
+      "id": "2022-10-29T06:38:28.250Z",
+      "title": "ㅁㄴㅇㅁㄴㅇ",
+      "content": "ㅁㄴㅇㅁㄴㅇ"
+    },
+    {
+      "title": "ㅁㄴㄴㅇㄴㅁ",
+      "content": "ㅁㄴㅇ",
+      "id": "SEiGkZB"
+    },
+    {
+      "title": "ㅁㄴㅇ",
+      "content": "ㅁㄴㅇ",
+      "id": "62IAWv8"
     }
   ],
   "comments": [
