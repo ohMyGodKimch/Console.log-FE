@@ -4,11 +4,11 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_SERVER;
 
 const initialState = {
+	isLoading: false,
 	nickname: null,
 	statusMessage: null,
 	statusCode: null,
 	isLogin: null,
-	isLoading: false,
 	isCheckedId: false,
 	isCheckedNickname: false,
 };
@@ -23,10 +23,11 @@ export const __isIdExist = createAsyncThunk(
 				`${BASE_URL}/member/check-name`,
 				payload,
 			);
-			console.log("requestSignIn response =>", response);
+			console.log("__isIdExist response =>", response);
+
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
-			console.log("requestSignIn error =>", error);
+			console.log("__isIdExist error =>", error);
 			return thunkAPI.rejectWithValue(error.response.data);
 		}
 	},
@@ -42,10 +43,10 @@ export const __isNicknameExist = createAsyncThunk(
 				`${BASE_URL}/member/check-nickname`,
 				payload,
 			);
-			console.log("requestSignIn response =>", response);
+			console.log("__isNicknameExist response =>", response);
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
-			console.log("requestSignIn error =>", error);
+			console.log("__isNicknameExist error =>", error);
 			return thunkAPI.rejectWithValue(error.response.data);
 		}
 	},
@@ -92,7 +93,7 @@ const joinSlice = createSlice({
 	extraReducers: {
 		// 아이디 중복
 		[__isIdExist.pending]: (state, _) => {
-			console.log("__requestSignUp.pending");
+			console.log("__isIdExist.pending");
 			state.isLoading = true;
 		},
 		[__isIdExist.fulfilled]: (state, action) => {
