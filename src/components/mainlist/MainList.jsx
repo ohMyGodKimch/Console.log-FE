@@ -2,15 +2,16 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { __getMainList } from "../../redux/modules/mainlist/mainlistSlice";
 
-function MainList() {
+const MainList = () => {
 	const list = useSelector(state => state.mainlist.mainlist);
-	console.log(list);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(__getMainList(1));
 		console.log(1);
 	}, [dispatch]);
+
 	return (
 		<>
 			{list && list.length > 0
@@ -35,6 +36,6 @@ function MainList() {
 				: ""}
 		</>
 	);
-}
+};
 
 export default MainList;

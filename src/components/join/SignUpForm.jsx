@@ -52,6 +52,7 @@ const SignUpForm = () => {
 						console.log("values =>", values);
 						if (isCheckedId && isCheckedNickname) {
 							const { nickname, id, password } = values;
+							dispatch(__requestSignUp({ nickname, name: id, password }));
 						} else if (!isCheckedId && !isCheckedNickname) {
 							bothAlert();
 						} else if (!isCheckedId) {

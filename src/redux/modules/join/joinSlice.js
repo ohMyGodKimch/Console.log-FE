@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 const BASE_URL = process.env.REACT_APP_SERVER;
 
@@ -13,12 +14,11 @@ const initialState = {
 	isCheckedNickname: false,
 };
 
-// User Nickname Exist Check
 export const __isNicknameExist = createAsyncThunk(
-	"join/requestSignIn",
+	"join/isNicknameExist",
 	async (payload, thunkAPI) => {
+		console.log("__isIdExist payload =>", payload);
 		try {
-			console.log("__isNicknameExist payload =>", payload);
 			const response = await axios.post(
 				`${BASE_URL}/member/check-nickname`,
 				payload,
@@ -60,38 +60,52 @@ export const __isIdExist = createAsyncThunk(
 );
 
 // Sign Up POST
-// export const __requestSignUp = createAsyncThunk(
-// 	"join/requestSignIn",
-// 	async (payload, thunkAPI) => {
-// 		try {
-// 			console.log("requestSignIn payload =>", payload);
-// 			console.log();
-// 			const response = await axios.post(`${BASE_URL}/member/login`, payload);
-// 			console.log("requestSignIn response =>", response);
-// 			return thunkAPI.fulfillWithValue(response.data);
-// 		} catch (error) {
-// 			console.log("requestSignIn error =>", error);
-// 			return thunkAPI.rejectWithValue(error.response.data);
-// 		}
-// 	},
-// );
+export const __requestSignUp = createAsyncThunk(
+	"join/requestSignUp",
+	async (payload, thunkAPI) => {
+		try {
+			console.log("__requestSignUp payload =>", payload);
+			const response = await axios.post(`${BASE_URL}/member/signup`, payload);
+			console.log("__requestSignUp response =>", response);
+			const data = {
+				statusCode: response.status,
+				successMsg: response.data.data,
+			};
+			console.log("__requestSignUp data =>", data);
+			return thunkAPI.fulfillWithValue(data);
+		} catch (error) {
+			console.log("__requestSignUp error =>", error);
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
 
-// // Sign In POST
-// export const __requestSignIn = createAsyncThunk(
-// 	"join/requestSignIn",
-// 	async (payload, thunkAPI) => {
-// 		try {
-// 			console.log("requestSignIn payload =>", payload);
-// 			console.log();
-// 			const response = await axios.post(`${BASE_URL}/member/login`, payload);
-// 			console.log("requestSignIn response =>", response);
-// 			return thunkAPI.fulfillWithValue(response.data);
-// 		} catch (error) {
-// 			console.log("requestSignIn error =>", error);
-// 			return thunkAPI.rejectWithValue(error.response.data);
-// 		}
-// 	},
-// );
+// Sign In POST
+export const __requestSignIn = createAsyncThunk(
+	"join/requestSignIn",
+	async (payload, thunkAPI) => {
+		try {
+			console.log("__requestSignUp payload =>", payload);
+			const response = await axios.post(`${BASE_URL}/member/login`, payload);
+			console.log("__requestSignIn response =>", response);
+			const {
+				status,
+				data: { data },
+				headers: { authorization },
+			} = response;
+			const { sub } = jwt_decode(authorization);
+			return thunkAPI.fulfillWithValue({
+				statusCode: status,
+				statusMessage: data,
+				nickname: sub,
+				token: authorization,
+			});
+		} catch (error) {
+			console.log("__requestSignIn error =>", error);
+			return thunkAPI.rejectWithValue(error.response.data);
+		}
+	},
+);
 
 const joinSlice = createSlice({
 	name: "join",
@@ -113,8 +127,8 @@ const joinSlice = createSlice({
 		[__isNicknameExist.fulfilled]: (state, action) => {
 			console.log("__isNicknameExist.fulfilled =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
-			state.statusMessage = action.payload.msg;
+			state.statusCode = action.payload.fulfilledData.statusCode;
+			state.statusMessage = action.payload.fulfilledData.msg;
 			state.isCheckedNickname = action.payload.isExist;
 		},
 		[__isNicknameExist.rejected]: (state, action) => {
@@ -143,45 +157,41 @@ const joinSlice = createSlice({
 			state.statusMessage = action.payload.msg;
 			state.isCheckedId = action.payload.isExist;
 		},
-
 		// 회원가입
-		// [__requestSignUp.pending]: (state, _) => {
-		// 	console.log("__requestSignUp.pending");
-		// 	state.isLoading = true;
-		// },
-		// [__requestSignUp.fulfilled]: (state, action) => {
-		// 	console.log("__requestSignUp.fulfilled =>", action.payload);
-		// 	state.isLoading = false;
-		// 	state.statusCode = action.payload.statusCode;
-		// 	state.statusMessage = action.payload.msg;
-		// 	state.user = action.payload;
-		// },
-		// [__requestSignUp.rejected]: (state, action) => {
-		// 	console.log("__requestSignUp.rejected =>", action.payload);
-		// 	state.isLoading = false;
-		// 	state.statusCode = action.payload.statusCode;
-		// 	state.statusMessage = action.payload.msg;
-		// 	state.error = action.payload;
-		// },
+		[__requestSignUp.pending]: (state, _) => {
+			console.log("__requestSignUp.pending");
+			state.isLoading = true;
+		},
+		[__requestSignUp.fulfilled]: (state, action) => {
+			console.log("__requestSignUp.fulfilled =>", action.payload);
+			state.isLoading = false;
+			state.statusCode = action.payload.statusCode;
+			state.isCheckedId = action.payload.isExist;
+		},
+		[__requestSignUp.rejected]: (state, action) => {
+			console.log("__requestSignUp.rejected =>", action.payload);
+			state.isLoading = false;
+			state.statusCode = action.payload.statusCode;
+			state.isCheckedId = action.payload.isExist;
+		},
 		// 로그인
-		// [__requestSignIn.pending]: (state, _) => {
-		// 	console.log("__requestSignUp.pending");
-		// 	state.isLoading = true;
-		// },
-		// [__requestSignIn.fulfilled]: (state, action) => {
-		// 	console.log("__requestSignUp.fulfilled =>", action.payload);
-		// 	state.isLoading = false;
-		// 	state.statusCode = action.payload.statusCode;
-		// 	state.statusMessage = action.payload.msg;
-		// 	state.user = action.payload;
-		// },
-		// [__requestSignIn.rejected]: (state, action) => {
-		// 	console.log("__requestSignUp.rejected =>", action.payload);
-		// 	state.isLoading = false;
-		// 	state.statusCode = action.payload.statusCode;
-		// 	state.statusMessage = action.payload.msg;
-		// 	state.error = action.payload;
-		// },
+		[__requestSignIn.pending]: (state, _) => {
+			console.log("__requestSignIn pending");
+			state.isLoading = true;
+		},
+		[__requestSignIn.fulfilled]: (state, action) => {
+			console.log("__requestSignIn fulfilled =>", action.payload);
+			state.isLoading = false;
+			state.statusCode = action.payload.statusCode;
+			state.statusMessage = action.payload.successMsg;
+			localStorage.setItem("jwtToken", action.payload.token);
+			localStorage.setItem("nickname", action.payload.token);
+		},
+		[__requestSignIn.rejected]: (state, action) => {
+			console.log("__requestSignIn rejected =>", action.payload);
+			state.isLoading = false;
+			state.statusCode = action.payload.statusCode;
+		},
 	},
 });
 

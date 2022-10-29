@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SignInPage, SignUpPage } from "../pages/join";
-import JoinLayout from "../layout/join";
+import { JoinLayout, MainLayout } from "../layout";
 import WritePage from "../pages/write/WritePage";
-import { MainlistPage } from "../pages/mainlist";
 
 const Router = () => {
 	return (
@@ -13,7 +12,7 @@ const Router = () => {
 						<Route path="signup" element={<SignUpPage />} />
 						<Route path="signin" element={<SignInPage />} />
 					</Route>
-					<Route path="/main" element={<MainlistPage />}></Route>
+					<Route path="/main" element={<MainLayout />} />
 					<Route path="/boadrs" element={<WritePage />}></Route>
 				</Routes>
 			</BrowserRouter>

@@ -1,2 +1,2 @@
-import MainlistPage from "./MainlistPage";
-export { MainlistPage };
+import MainListPage from "./MainListPage";
+export { MainListPage };

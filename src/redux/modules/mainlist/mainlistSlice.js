@@ -14,7 +14,7 @@ export const __getMainList = createAsyncThunk(
 );
 
 const initialState = {
-	list: [],
+	list: [1, 2, 3],
 	isLoding: false,
 	error: null,
 };

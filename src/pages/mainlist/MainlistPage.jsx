@@ -1,12 +1,12 @@
-import React from "react";
+import * as styles from "./MainListPage.styles";
 import { MainList } from "../../components/mainlist";
 
-function MainlistPage() {
+function MainListPage() {
 	return (
-		<>
+		<styles.MainListPage>
 			<MainList />
-		</>
+		</styles.MainListPage>
 	);
 }
 
-export default MainlistPage;
+export default MainListPage;
