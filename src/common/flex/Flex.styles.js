@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Flex = styled.div`
 	display: flex;
+	flex-wrap: ${({ fw }) => (fw ? fw : "wrap")};
 	flex-direction: ${({ fd }) => (fd ? fd : "row")};
 	justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
 	align-items: ${({ ai }) => (ai ? ai : "flex-start")};

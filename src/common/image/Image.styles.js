@@ -16,6 +16,20 @@ export const Image = styled.img`
 					object-fit: cover;
 					cursor: pointer;
 				`;
+			case "main-item-profile":
+				return css`
+					object-fit: cover;
+					border-radius: 50%;
+					width: 1.5rem;
+					height: 1.5rem;
+					display: block;
+					margin-right: 0.5rem;
+				`;
+			case "main-item":
+				return css`
+					width: 100%;
+					height: 167px;
+				`;
 			default:
 				break;
 		}

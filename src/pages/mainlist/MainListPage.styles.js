@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MainListPage = styled.main`
-	background-color: blueviolet;
-	width: 500px;
-	height: 600px;
+	width: 1760px;
+	height: 100vh;
+	padding: 10px;
 `;

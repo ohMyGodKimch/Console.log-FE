@@ -8,9 +8,12 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
   }
+  body {
+    background-color: #f8f9fa;
+  }
   body, div, span, h1, h2, h3, h4, h5, h6,
   p, i, ol, ul, li, form, label, header, nav, 
-  input, textarea, button {
+  input, textarea, button {	
 	margin: 0;
 	padding: 0;
 	border: 0;
