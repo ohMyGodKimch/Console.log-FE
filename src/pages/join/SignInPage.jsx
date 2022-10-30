@@ -3,7 +3,7 @@ import { SignInForm } from "../../components/join";
 
 const SignInPage = () => {
 	return (
-		<Flex>
+		<Flex width="100%" height="100vh" ai="center" jc="center">
 			<SignInForm />
 		</Flex>
 	);

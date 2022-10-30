@@ -67,6 +67,13 @@ export const Box = styled.div`
 					font-weight: 400;
 					cursor: pointer;
 				`;
+			case "signin":
+				return css`
+					width: 606px;
+					height: 530px;
+					box-shadow: rgb(0 0 0 / 10%) 0px 2px 12px 0px;
+					background-color: #ffffff;
+				`;
 			default:
 				break;
 		}
