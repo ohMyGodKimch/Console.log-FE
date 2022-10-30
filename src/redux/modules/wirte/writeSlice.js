@@ -5,19 +5,27 @@ const BASE_URL = process.env.REACT_APP_SERVER;
 //localhost:8080/
 // http://13.125.106.163:8080/
 
+axios.defaults.headers.post["Authorization"] = "X-AUTH_TOKEN";
+
 export const __postWrite = createAsyncThunk(
 	"postWrite",
 	async (payload, thunkAPI) => {
 		try {
-			// const response = await axios.post(`${BASE_URL}/boadrs`, payload);
-			const response = await axios.post(
-				"http://localhost:8080/boadrs",
-				payload,
-			);
 			console.log(payload);
-			return thunkAPI.fulfillWithValue(response.data);
+			const reponse = await axios.post(`${BASE_URL}/boards`, payload);
+			// , {
+			// 	headers: {
+			// 		Authorization: "X-AUTH_TOKEN",
+			// 	},
+			// }
+
+			console.log(reponse);
+			// localStorage.setItem.headers("Authorization", "X-AUTH_TOKEN");
+			console.log(reponse.headers);
+			return thunkAPI.fulfillWithValue(reponse.data.headers);
 		} catch (error) {
-			return thunkAPI.rejectWithValue(error.respone.data);
+			console.log(payload);
+			return thunkAPI.rejectWithValue(error.data);
 		}
 	},
 );
