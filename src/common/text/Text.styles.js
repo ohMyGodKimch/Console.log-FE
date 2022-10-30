@@ -9,11 +9,22 @@ export const Text = styled.p`
 
 	${({ variant }) => {
 		switch (variant) {
-			case "main-post-div":
+			case "main-new":
 				return css`
-					width: 500px;
-					height: 500px;
-					background-color: aliceblue;
+					font-size: 18px;
+					font-weight: 600;
+					letter-spacing: 0.06em;
+				`;
+			case "main-item-content":
+				return css`
+					word-break: break-word;
+					overflow-wrap: break-word;
+					font-size: 14px;
+					line-height: 1.5;
+					height: 4rem;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					color: #495057;
 				`;
 			default:
 				break;

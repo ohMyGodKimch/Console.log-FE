@@ -1,3 +1,4 @@
 import JoinLayout from "./join";
+import MainLayout from "./main";
 
-export default JoinLayout;
+export { JoinLayout, MainLayout };

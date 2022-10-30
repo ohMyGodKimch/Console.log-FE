@@ -1,40 +1,52 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Box, Margin, Flex } from "../../common";
 import { __getMainList } from "../../redux/modules/mainlist/mainlistSlice";
+import { MainItem } from "../../components/mainlist";
 
-function MainList() {
+const MainList = () => {
 	const list = useSelector(state => state.mainlist.mainlist);
-	console.log(list);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(__getMainList(1));
 		console.log(1);
 	}, [dispatch]);
+
 	return (
-		<>
-			{list && list.length > 0
+		<Margin margin="30px 0 0 0">
+			<Box variant="main-list-box">
+				<Flex gap="30px" jc="center">
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					<MainItem />
+					{/* {list && list.length > 0
 				? list.map((boards, idx) => {
-						return (
-							<form key={idx}>
-								<div>velog</div>
-								<br />
-								<div>
-									트렌딩
-									<div>최신</div>
-									<br />
-									<div>
-										<div>{boards.title}</div>
-										<br />
-										<div>{boards.coments}</div>
-									</div>
-								</div>
-							</form>
-						);
+						return <MainItem />;
 				  })
-				: ""}
-		</>
+				: ""} */}
+				</Flex>
+			</Box>
+		</Margin>
 	);
-}
+};
 
 export default MainList;

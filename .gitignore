@@ -7,6 +7,9 @@ bin-release/
 # Other files and folders
 .settings/
 
+# misc
+.env
+
 # Executables
 *.swf
 *.air
@@ -18,4 +21,3 @@ bin-release/
 # information for Eclipse / Flash Builder.
 node_modules
 
-.env

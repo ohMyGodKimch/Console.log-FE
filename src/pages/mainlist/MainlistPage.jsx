@@ -1,12 +1,18 @@
-import React from "react";
-import { MainList } from "../../components/mainlist";
+import * as styles from "./MainListPage.styles";
+import { Flex, Margin } from "../../common";
+import { MainList, MainButtonGroup, MainItem } from "../../components/mainlist";
 
-function MainlistPage() {
+function MainListPage() {
 	return (
-		<>
-			<MainList />
-		</>
+		<Flex width="100%" jc="center">
+			<styles.MainListPage>
+				<Margin margin="11px 0 0 0">
+					<MainButtonGroup />
+				</Margin>
+				<MainList />
+			</styles.MainListPage>
+		</Flex>
 	);
 }
 
-export default MainlistPage;
+export default MainListPage;

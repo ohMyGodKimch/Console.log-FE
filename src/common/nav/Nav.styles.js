@@ -11,7 +11,7 @@ export const Nav = styled.nav`
 		switch (variant) {
 			case "main-nav-box":
 				return css`
-					background-color: aliceblue;
+					height: 64px;
 				`;
 			default:
 				break;
