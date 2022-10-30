@@ -1,8 +1,10 @@
 import { Nav, FirstHeading, Box, Button, Image, Flex } from "../../common";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MainNav = () => {
 	const [select, setSelect] = useState(false);
+	const navigate = useNavigate();
 
 	return (
 		<Nav variant="main-nav-box">
@@ -20,7 +22,14 @@ const MainNav = () => {
 						<Flex jc="flex-end">
 							<Box>
 								<Flex gap="20px" height="100%" ai="center">
-									<Button variant="new-post">새 글 작성</Button>
+									<Button
+										variant="new-post"
+										onClick={() => {
+											navigate("/boards/");
+										}}
+									>
+										새 글 작성
+									</Button>
 									<Box variant="main-nav-relative">
 										<Flex width="100%" height="100%" gap="6px" ai="center">
 											<Box onClick={() => setSelect(!select)}>

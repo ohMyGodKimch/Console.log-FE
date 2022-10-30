@@ -12,19 +12,21 @@ export const __postWrite = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			console.log(payload);
-			const reponse = await axios.post(`${BASE_URL}/boards`, payload);
+			const reponse = await axios.post(
+				`${BASE_URL}/boards`,
+				payload,
+				"Authorization",
+			);
 			// , {
 			// 	headers: {
 			// 		Authorization: "X-AUTH_TOKEN",
 			// 	},
 			// }
 
-			console.log(reponse);
 			// localStorage.setItem.headers("Authorization", "X-AUTH_TOKEN");
-			console.log(reponse.headers);
+
 			return thunkAPI.fulfillWithValue(reponse.data.headers);
 		} catch (error) {
-			console.log(payload);
 			return thunkAPI.rejectWithValue(error.data);
 		}
 	},
