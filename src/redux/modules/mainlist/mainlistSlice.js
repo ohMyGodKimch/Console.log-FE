@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = process.env.REACT_APP_SERVER;
+
 export const __getMainList = createAsyncThunk(
 	"getMainList",
 	async (payload, thunkAPI) => {
 		try {
-			const response = await axios.get("http://localhost:8080/boadrs");
+			const response = await axios.get(`${BASE_URL}/boadrs`);
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
