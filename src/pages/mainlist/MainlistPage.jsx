@@ -1,6 +1,6 @@
 import * as styles from "./MainListPage.styles";
 import { Flex, Margin } from "../../common";
-import { MainList, MainButtonGroup, MainItem } from "../../components/mainlist";
+import { MainList, MainButtonGroup } from "../../components/mainlist";
 
 function MainListPage() {
 	return (

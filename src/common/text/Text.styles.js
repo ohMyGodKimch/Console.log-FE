@@ -26,6 +26,17 @@ export const Text = styled.p`
 					text-overflow: ellipsis;
 					color: #495057;
 				`;
+			case "join":
+				return css`
+					text-align: center;
+					font-size: 1.75rem;
+					color: #4a5158;
+					font-weight: 500;
+				`;
+			case "join-alert":
+				return css`
+					color: #21c997;
+				`;
 			default:
 				break;
 		}

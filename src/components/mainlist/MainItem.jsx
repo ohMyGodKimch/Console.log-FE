@@ -15,14 +15,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 const MainItem = () => {
 	const list = useSelector(state => state.mainlist.mainlist);
-
+	console.log("list => ", list);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(__getMainList());
 		console.log(1);
 	}, [dispatch]);
-	console.log(list);
 
 	return (
 		<>

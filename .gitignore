@@ -11,6 +11,8 @@ bin-release/
 .env
 .dbjson
 
+db.json
+
 # Executables
 *.swf
 *.air
