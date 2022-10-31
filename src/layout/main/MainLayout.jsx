@@ -1,7 +1,7 @@
 import * as styles from "./MainLayout.styles";
 import { Flex } from "../../common";
 import { MainNav } from "../../components/mainlist";
-import { MainListPage } from "../../pages/mainlist/index";
+import { MainListPage } from "../../pages/mainlist/MainListPage.styles";
 
 const MainLayout = () => {
 	return (
