@@ -7,6 +7,12 @@ export const FirstHeading = styled.h1`
 				return css`
 					cursor: pointer;
 				`;
+			case "join":
+				return css`
+					font-size: 21px;
+					font-weight: 600;
+					letter-spacing: 0.05em;
+				`;
 			default:
 				break;
 		}
@@ -33,6 +39,7 @@ export const SecondHeading = styled.h2`
 					white-space: nowrap;
 					overflow: hidden;
 				`;
+
 			default:
 				break;
 		}

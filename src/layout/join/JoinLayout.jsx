@@ -1,5 +1,5 @@
-import * as styles from "./JoinLayout.styles";
 import { Outlet } from "react-router-dom";
+import * as styles from "./JoinLayout.styles";
 
 const JoinLayout = () => {
 	return (

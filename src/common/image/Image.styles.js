@@ -30,6 +30,11 @@ export const Image = styled.img`
 					width: 100%;
 					height: 167px;
 				`;
+			case "join":
+				return css`
+					width: 100%;
+					height: 167px;
+				`;
 			default:
 				break;
 		}

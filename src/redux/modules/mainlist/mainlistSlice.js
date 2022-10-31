@@ -7,7 +7,7 @@ export const __getMainList = createAsyncThunk(
 	"getMainList",
 	async (payload, thunkAPI) => {
 		try {
-			const response = await axios.get(`${BASE_URL}/boadrs`);
+			const response = await axios.get(`${BASE_URL}/boards`);
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);

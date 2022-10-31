@@ -74,6 +74,44 @@ export const Box = styled.div`
 					box-shadow: rgb(0 0 0 / 10%) 0px 2px 12px 0px;
 					background-color: #ffffff;
 				`;
+			case "signup":
+				return css`
+					position: relative;
+					width: 606px;
+					height: 530px;
+					box-shadow: rgb(0 0 0 / 10%) 0px 2px 12px 0px;
+					background-color: #ffffff;
+				`;
+			case "join-title":
+				return css`
+					width: 216px;
+					height: 100%;
+					background-color: #f8f9fa;
+				`;
+			case "join-title-content":
+				return css`
+					width: 168px;
+					height: 230px;
+				`;
+			case "join-btn-wrap":
+				return css`
+					position: relative;
+				`;
+			case "join":
+				return css`
+					width: 390px;
+					height: 100%;
+					padding: 25px;
+				`;
+			case "join-popup":
+				return css`
+					position: fixed;
+					top: 0px;
+					left: 0px;
+					width: 100%;
+					height: 100vh;
+					z-index: 100;
+				`;
 			default:
 				break;
 		}
