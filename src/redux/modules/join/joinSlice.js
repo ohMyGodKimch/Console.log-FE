@@ -15,6 +15,8 @@ const initialState = {
 	isExistId: false,
 	isExistNickname: false,
 	isSignUp: false,
+	signUpStatusCode: null,
+	signInStatusCode: null,
 };
 
 // User Nickname Exist Check
@@ -24,7 +26,7 @@ export const __isNicknameExist = createAsyncThunk(
 		console.log("__isIdExist payload =>", payload);
 		try {
 			const nickname = payload;
-			const response = await axios.get(`${BASE_URL}/member/check-nickname`, {
+			const response = await axios.get(`${BASE_URL}/members/check-nickname`, {
 				params: { nickname },
 			});
 			console.log("__isNicknameExist response =>", response);
@@ -51,7 +53,7 @@ export const __isIdExist = createAsyncThunk(
 		console.log("__isIdExist payload =>", payload);
 		try {
 			const name = payload;
-			const response = await axios.get(`${BASE_URL}/member/check-name`, {
+			const response = await axios.get(`${BASE_URL}/members/check-name`, {
 				params: { name },
 			});
 			console.log("__isIdExist response =>", response);
@@ -77,7 +79,7 @@ export const __requestSignUp = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			console.log("__requestSignUp payload =>", payload);
-			const response = await axios.post(`${BASE_URL}/member/signup`, payload);
+			const response = await axios.post(`${BASE_URL}/members/signup`, payload);
 			console.log("__requestSignUp response =>", response);
 			const data = {
 				statusCode: response.status,
@@ -98,7 +100,7 @@ export const __requestSignIn = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			console.log("__requestSignUp payload =>", payload);
-			const response = await axios.post(`${BASE_URL}/member/login`, payload);
+			const response = await axios.post(`${BASE_URL}/members/login`, payload);
 			console.log("__requestSignIn response =>", response);
 			const {
 				status,
@@ -114,7 +116,11 @@ export const __requestSignIn = createAsyncThunk(
 			});
 		} catch (error) {
 			console.log("__requestSignIn error =>", error);
-			return thunkAPI.rejectWithValue(error.response.data);
+			const {
+				status,
+				data: { errorMessage },
+			} = error.response;
+			return thunkAPI.rejectWithValue({ statusCode: status, errorMessage });
 		}
 	},
 );
@@ -135,8 +141,8 @@ const joinSlice = createSlice({
 		resetNicknameExist: (state, _) => {
 			state.isExistNickname = false;
 		},
-		resetIsSignUp: (state, _) => {
-			state.isSignUp = false;
+		resetSignUpStatus: (state, _) => {
+			state.signInStatusCode = null;
 		},
 	},
 	extraReducers: {
@@ -188,13 +194,13 @@ const joinSlice = createSlice({
 		[__requestSignUp.fulfilled]: (state, action) => {
 			console.log("__requestSignUp.fulfilled =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
+			state.signUpStatusCode = action.payload.statusCode;
 			state.isSignUp = true;
 		},
 		[__requestSignUp.rejected]: (state, action) => {
 			console.log("__requestSignUp.rejected =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
+			state.signUpStatusCode = action.payload.statusCode;
 			state.isSignUp = false;
 		},
 		// 로그인
@@ -205,7 +211,7 @@ const joinSlice = createSlice({
 		[__requestSignIn.fulfilled]: (state, action) => {
 			console.log("__requestSignIn fulfilled =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
+			state.signInStatusCode = action.payload.statusCode;
 			state.statusMessage = action.payload.successMsg;
 			localStorage.setItem("jwtToken", action.payload.token);
 			localStorage.setItem("nickname", action.payload.nickname);
@@ -213,7 +219,8 @@ const joinSlice = createSlice({
 		[__requestSignIn.rejected]: (state, action) => {
 			console.log("__requestSignIn rejected =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
+			state.signInStatusCode = action.payload.statusCode;
+			state.statusMessage = action.payload.successMsg;
 		},
 	},
 });
@@ -223,6 +230,6 @@ export const {
 	resetNicknameCheck,
 	resetIdExist,
 	resetNicknameExist,
-	resetIsSignUp,
+	resetSignUpStatus,
 } = joinSlice.actions;
 export default joinSlice.reducer;

@@ -20,15 +20,11 @@ import {
 	resetNicknameCheck,
 	resetNicknameExist,
 	resetIdExist,
-	resetIsSignUp,
 } from "../../redux/modules/join/joinSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 
 const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
-	// React Router
-	const navigate = useNavigate();
 	// Redux dispatcer
 	const dispatch = useDispatch();
 	// Redux state
@@ -143,8 +139,11 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 												증복확인
 											</Button>
 										</Margin>
-										{errors.nickname && (
+										{errors.nickname &&
+										inputValue.nickNameValue.length === 0 ? (
 											<Text variant="join-alert">닉네임을 입력해주세요.</Text>
+										) : (
+											""
 										)}
 										{isCheckedNickname && !isExistNickname ? (
 											<Text variant="join-alert">
@@ -189,8 +188,12 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 												중복확인
 											</Button>
 										</Margin>
-										{errors.id && errors.id.type === "required" && (
+										{errors.id &&
+										errors.id.type === "required" &&
+										inputValue.idValue.length === 0 ? (
 											<Text variant="join-alert">아이디를 입력해주세요.</Text>
+										) : (
+											""
 										)}
 										{errors.id && errors.id.type === "pattern" && (
 											<Text variant="join-alert">
