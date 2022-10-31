@@ -1,5 +1,4 @@
 import { Box, Margin, Flex } from "../../common";
-
 import { MainItem } from "../../components/mainlist";
 
 const MainList = () => {
