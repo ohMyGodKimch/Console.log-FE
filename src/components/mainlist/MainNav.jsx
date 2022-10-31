@@ -1,11 +1,9 @@
 import JoinLayout from "../../layout/join";
 import { Nav, FirstHeading, Box, Button, Image, Flex } from "../../common";
 import { SignInForm, SignUpForm } from "../../components/join";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Outlet } from "react-router-dom";
-import { resetIsSignUp } from "../../redux/modules/join/joinSlice";
 
 const MainNav = () => {
 	// React Router
@@ -19,12 +17,15 @@ const MainNav = () => {
 	// 회원가입 버튼 클릭 여부
 	const [isSignUpClick, setIsSignUpClick] = useState(false);
 	// Redux state - 회원가입 성공 유무 상태
-	const { isSignUp } = useSelector(state => state.join);
+	const { isLoading, signUpStatusCode } = useSelector(state => state.join);
+
 	// 회원가입 완료 검사 후 처리
-	if (isSignUp) {
-		dispatch(resetIsSignUp());
-		setIsSignUpClick(!isSignUpClick);
-	}
+	useEffect(() => {
+		if (!isLoading && signUpStatusCode === 200) {
+			setIsLoginClick(true);
+			setIsSignUpClick(false);
+		}
+	}, [dispatch, isLoading, signUpStatusCode]);
 
 	return (
 		<>
