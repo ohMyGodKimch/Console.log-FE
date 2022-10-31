@@ -64,8 +64,12 @@ export const Box = styled.div`
 				return css`
 					padding: 0.75rem 1rem;
 					line-height: 1.5;
-					font-weight: 400;
 					cursor: pointer;
+
+					&:hover {
+						background-color: #f8f9fa;
+						color: #21c997;
+					}
 				`;
 			case "signin":
 				return css`

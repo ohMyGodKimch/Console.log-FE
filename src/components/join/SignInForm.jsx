@@ -9,12 +9,18 @@ import {
 	Flex,
 	Margin,
 } from "../../common";
+
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { __requestSignIn } from "../../redux/modules/join/joinSlice";
 
-const SignInForm = ({ isLoginClick, setIsLoginClick }) => {
+const SignInForm = ({
+	isLoginClick,
+	setIsLoginClick,
+	isSignUpClick,
+	setIsSignUpClick,
+}) => {
 	// Redux dispatcer
 	const dispatch = useDispatch();
 	// React Hook Form
@@ -24,7 +30,6 @@ const SignInForm = ({ isLoginClick, setIsLoginClick }) => {
 		formState: { errors },
 	} = useForm();
 	// React Router
-	const navigate = useNavigate();
 
 	return (
 		<Box variant="join-popup">
@@ -109,7 +114,9 @@ const SignInForm = ({ isLoginClick, setIsLoginClick }) => {
 										<Text>아직 회원이 아니신가요?</Text>
 										<Button
 											variant="signin-signup"
-											onClick={() => navigate("/join/signup")}
+											onClick={() => {
+												setIsSignUpClick(!isSignUpClick);
+											}}
 										>
 											회원가입
 										</Button>

@@ -1,6 +1,9 @@
 import styled, { css } from "styled-components";
 
 export const Button = styled.button`
+	&:hover {
+		opacity: 0.8;
+	}
 	${({ variant }) => {
 		switch (variant) {
 			case "login":

@@ -1,13 +1,30 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Nav, FirstHeading, Box, Button, Image, Flex } from "../../common";
-import { SignInForm } from "../../components/join";
 import JoinLayout from "../../layout/join";
+import { Nav, FirstHeading, Box, Button, Image, Flex } from "../../common";
+import { SignInForm, SignUpForm } from "../../components/join";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { resetIsSignUp } from "../../redux/modules/join/joinSlice";
 
 const MainNav = () => {
-	const [select, setSelect] = useState(false);
-	const [isLoginClick, setIsLoginClick] = useState(false);
+	// React Router
 	const navigate = useNavigate();
+	// Redux Store
+	const dispatch = useDispatch();
+	// 메뉴바 셀렉트 박스 클릭 여부
+	const [select, setSelect] = useState(false);
+	// 로그인 버튼 클릭 여부
+	const [isLoginClick, setIsLoginClick] = useState(false);
+	// 회원가입 버튼 클릭 여부
+	const [isSignUpClick, setIsSignUpClick] = useState(false);
+	// Redux state - 회원가입 성공 유무 상태
+	const { isSignUp } = useSelector(state => state.join);
+	// 회원가입 완료 검사 후 처리
+	if (isSignUp) {
+		dispatch(resetIsSignUp());
+		setIsSignUpClick(!isSignUpClick);
+	}
 
 	return (
 		<>
@@ -62,7 +79,15 @@ const MainNav = () => {
 															<Box variant="main-nav-select-item">
 																새 글 작성
 															</Box>
-															<Box variant="main-nav-select-item">로그아웃</Box>
+															<Box
+																variant="main-nav-select-item"
+																onClick={() => {
+																	localStorage.removeItem("jwtToken");
+																	localStorage.removeItem("nickname");
+																}}
+															>
+																로그아웃
+															</Box>
 														</Box>
 													) : (
 														""
@@ -90,6 +115,18 @@ const MainNav = () => {
 					<SignInForm
 						isLoginClick={isLoginClick}
 						setIsLoginClick={setIsLoginClick}
+						isSignUpClick={isSignUpClick}
+						setIsSignUpClick={setIsSignUpClick}
+					/>
+				</>
+			) : (
+				""
+			)}
+			{isSignUpClick ? (
+				<>
+					<SignUpForm
+						isSignUpClick={isSignUpClick}
+						setIsSignUpClick={setIsSignUpClick}
 					/>
 				</>
 			) : (

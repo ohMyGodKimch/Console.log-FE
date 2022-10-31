@@ -18,21 +18,30 @@ import {
 	__requestSignUp,
 	resetIdCheck,
 	resetNicknameCheck,
+	resetNicknameExist,
+	resetIdExist,
+	resetIsSignUp,
 } from "../../redux/modules/join/joinSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
-const SignUpForm = () => {
+const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
+	// React Router
+	const navigate = useNavigate();
 	// Redux dispatcer
 	const dispatch = useDispatch();
 	// Redux state
-	const { isCheckedNickname, isCheckedId } = useSelector(state => state.join);
-	console.log(
-		"isCheckedNickname =>",
+	const {
 		isCheckedNickname,
-		"isChekedId =>",
 		isCheckedId,
-	);
+		isExistId,
+		isExistNickname,
+		isSignUp,
+	} = useSelector(state => state.join);
+
+	console.log("isSignUp => ", isSignUp);
+
 	// React Hook Form
 	const {
 		handleSubmit,
@@ -75,7 +84,12 @@ const SignUpForm = () => {
 								<Flex fd="column" width="100%">
 									<Flex width="100%" jc="flex-end">
 										<Margin margin="0 0 20px 0">
-											<Button variant="join-close" onClick={() => {}}>
+											<Button
+												variant="join-close"
+												onClick={() => {
+													setIsSignUpClick(!isSignUpClick);
+												}}
+											>
 												<svg viewBox="0 0 25 25" height="2em" width="2em">
 													<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
 												</svg>
@@ -109,6 +123,7 @@ const SignUpForm = () => {
 												{...register("nickname", { required: true })}
 												onChange={e => {
 													dispatch(resetNicknameCheck());
+													dispatch(resetNicknameExist());
 													setInputValue(prev => {
 														return {
 															...prev,
@@ -131,10 +146,15 @@ const SignUpForm = () => {
 										{errors.nickname && (
 											<Text variant="join-alert">닉네임을 입력해주세요.</Text>
 										)}
-										{isCheckedNickname ? (
+										{isCheckedNickname && !isExistNickname ? (
 											<Text variant="join-alert">
 												사용할 수 있는 닉네임입니다.
 											</Text>
+										) : (
+											""
+										)}
+										{isExistNickname ? (
+											<Text variant="join-alert">중복된 닉네임입니다.</Text>
 										) : (
 											""
 										)}
@@ -148,6 +168,7 @@ const SignUpForm = () => {
 												})}
 												onChange={e => {
 													dispatch(resetIdCheck());
+													dispatch(resetIdExist());
 													setInputValue(prev => {
 														return {
 															...prev,
@@ -176,10 +197,15 @@ const SignUpForm = () => {
 												4~10자의 영문 대,소문자를 필수로 입력해주세요.
 											</Text>
 										)}
-										{isCheckedId ? (
+										{isCheckedId && !isExistId ? (
 											<Text variant="join-alert">
 												사용할 수 있는 아이디입니다.
 											</Text>
+										) : (
+											""
+										)}
+										{isExistId ? (
+											<Text variant="join-alert">중복된 아이디입니다.</Text>
 										) : (
 											""
 										)}
