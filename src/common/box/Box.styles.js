@@ -112,6 +112,20 @@ export const Box = styled.div`
 					height: 100vh;
 					z-index: 100;
 				`;
+			case "write-box":
+				return css`
+					max-height: 540px;
+					box-sizing: inherit;
+					display: block;
+					font-family: "Malgun Gothic";
+					-webkit-font-smoothing: antialiased;
+					color: var(--text1);
+				`;
+			case "write-cover-box":
+				return css`
+					padding: 1rem;
+					box-sizing: inherit;
+				`;
 			default:
 				break;
 		}

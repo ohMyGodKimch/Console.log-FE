@@ -87,13 +87,18 @@ function Write() {
 
 	return (
 		<>
-			<Input
-				type="text"
-				name="title"
-				placeholder="제목을 입력해주세요"
-				value={input.title}
-				onChange={onChangeHandler}
-			/>
+			<Box variant="write-box">
+				<Box variant="write-cover-box">
+					<Input
+						variant="write-input"
+						type="text"
+						name="title"
+						placeholder="제목을 입력하세요"
+						value={input.title}
+						onChange={onChangeHandler}
+					/>
+				</Box>
+			</Box>
 			<>
 				<Editor
 					previewStyle="vertical"
