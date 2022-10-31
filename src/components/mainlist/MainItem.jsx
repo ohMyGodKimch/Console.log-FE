@@ -20,7 +20,6 @@ const MainItem = () => {
 
 	useEffect(() => {
 		dispatch(__getMainList());
-		console.log(1);
 	}, [dispatch]);
 
 	return (
