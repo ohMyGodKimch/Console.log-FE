@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 const BASE_URL = process.env.REACT_APP_SERVER;
 
 const initialState = {
+	token: null,
 	isLoading: false,
 	nickname: null,
 	statusMessage: null,
@@ -14,7 +15,6 @@ const initialState = {
 	isCheckedNickname: false,
 	isExistId: false,
 	isExistNickname: false,
-	isSignUp: false,
 	signUpStatusCode: null,
 	signInStatusCode: null,
 };
@@ -144,6 +144,9 @@ const joinSlice = createSlice({
 		resetSignUpStatus: (state, _) => {
 			state.signInStatusCode = null;
 		},
+		resetToken: (state, _) => {
+			state.token = null;
+		},
 	},
 	extraReducers: {
 		// 닉네임 중복
@@ -213,6 +216,7 @@ const joinSlice = createSlice({
 			state.isLoading = false;
 			state.signInStatusCode = action.payload.statusCode;
 			state.statusMessage = action.payload.successMsg;
+			state.token = action.payload.token;
 			localStorage.setItem("jwtToken", action.payload.token);
 			localStorage.setItem("nickname", action.payload.nickname);
 		},
@@ -231,5 +235,6 @@ export const {
 	resetIdExist,
 	resetNicknameExist,
 	resetSignUpStatus,
+	resetToken,
 } = joinSlice.actions;
 export default joinSlice.reducer;

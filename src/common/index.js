@@ -9,6 +9,7 @@ import TextArea from "./textArea";
 import Input from "./input";
 import Image from "./image";
 import Margin from "./margin";
+import Hidden from "./hidden";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading";
 import { DataList, DataDisc, DataTerm } from "./description";
 
@@ -29,5 +30,6 @@ export {
 	DataList,
 	DataDisc,
 	DataTerm,
+	Hidden,
 	Input,
 };

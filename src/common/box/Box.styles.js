@@ -240,6 +240,13 @@ export const Box = styled.div`
 					justify-content: flex-end;
 					color: rgb(33, 37, 41);
 				`;
+			case "main-item-sub-info":
+				return css`
+					padding: 1rem;
+					width: 324px;
+					font-size: 0.75rem;
+					color: #8f969d;
+				`;
 			default:
 				break;
 		}
