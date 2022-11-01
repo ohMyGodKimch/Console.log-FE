@@ -10,7 +10,7 @@ import {
 	DataTerm,
 	Hidden,
 } from "../../common";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 
 const MainItem = ({ postData }) => {
 	return (

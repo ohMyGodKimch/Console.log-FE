@@ -4,6 +4,8 @@ import WritePage from "../pages/write/WritePage";
 import { MainItem } from "../components/mainlist";
 import { Mypage } from "../pages/mypage";
 import { Test } from "../pages/test";
+import { EditPage } from "../pages/edit";
+import { MainListPage } from "../pages/mainlist";
 
 const Router = () => {
 	return (
@@ -16,8 +18,8 @@ const Router = () => {
 					<Route path="/main" element={<MainListPage />} />
 					<Route path="/mypage/:id" element={<Mypage />} />
 					<Route path="/edit/:id" element={<EditPage />} />
-					<Route path="/main" element={<MainItem />} />
-					<Route path="/mypage" element={<Mypage />} />
+					{/* <Route path="/main" element={<MainItem />} /> */}
+
 					<Route path="/test" element={<Test />} />
 				</Routes>
 			</BrowserRouter>
