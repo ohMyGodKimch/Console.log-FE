@@ -28,6 +28,7 @@ function Write() {
 	const [input, setInput] = useState({
 		title: "",
 		content: "",
+		images: [],
 	});
 
 	const onChangeHandler = e => {
@@ -102,9 +103,9 @@ function Write() {
 			<>
 				<Editor
 					previewStyle="vertical"
-					height="600px"
+					height="610px"
 					initialEditType="markdown"
-					placeholder="내용을 입력해주세요"
+					placeholder="당신의 이야기를 적어보세요..."
 					usageStatistics={false}
 					plugins={[
 						chart,
@@ -119,19 +120,22 @@ function Write() {
 					ref={editorRef}
 				/>
 			</>
-			<div>
-				<Button onClick={btnClickListener}>클릭</Button>
-			</div>
-			<div>
-				<button
-					type="button"
-					onClick={() => {
-						navigate("/main/");
-					}}
-				>
-					나가기
-				</button>
-			</div>
+			<Box variant="write-btn-box">
+				<Box variant="write-btn-box1">
+					<Button
+						variant="write-left-btn"
+						type="button"
+						onClick={() => {
+							navigate("/main/");
+						}}
+					>
+						← 나가기
+					</Button>
+					<Button variant="write-wrigth-btn" onClick={btnClickListener}>
+						출간하기
+					</Button>
+				</Box>
+			</Box>
 		</>
 	);
 }

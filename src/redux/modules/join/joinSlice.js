@@ -12,17 +12,23 @@ const initialState = {
 	isLogin: null,
 	isCheckedId: false,
 	isCheckedNickname: false,
+	isExistId: false,
+	isExistNickname: false,
+	isSignUp: false,
+	signUpStatusCode: null,
+	signInStatusCode: null,
 };
 
+// User Nickname Exist Check
 export const __isNicknameExist = createAsyncThunk(
 	"join/isNicknameExist",
 	async (payload, thunkAPI) => {
 		console.log("__isIdExist payload =>", payload);
 		try {
-			const response = await axios.post(
-				`${BASE_URL}/member/check-nickname`,
-				payload,
-			);
+			const nickname = payload;
+			const response = await axios.get(`${BASE_URL}/members/check-nickname`, {
+				params: { nickname },
+			});
 			console.log("__isNicknameExist response =>", response);
 			const data = {
 				statusCode: response.status,
@@ -31,7 +37,11 @@ export const __isNicknameExist = createAsyncThunk(
 			return thunkAPI.fulfillWithValue(data);
 		} catch (error) {
 			console.log("__isNicknameExist error =>", error);
-			return thunkAPI.rejectWithValue(error.response.data);
+			const {
+				status,
+				data: { errorMessage },
+			} = error.response;
+			return thunkAPI.rejectWithValue({ statusCode: status, errorMessage });
 		}
 	},
 );
@@ -42,10 +52,10 @@ export const __isIdExist = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		console.log("__isIdExist payload =>", payload);
 		try {
-			const response = await axios.post(
-				`${BASE_URL}/member/check-name`,
-				payload,
-			);
+			const name = payload;
+			const response = await axios.get(`${BASE_URL}/members/check-name`, {
+				params: { name },
+			});
 			console.log("__isIdExist response =>", response);
 			const data = {
 				statusCode: response.status,
@@ -54,7 +64,11 @@ export const __isIdExist = createAsyncThunk(
 			return thunkAPI.fulfillWithValue(data);
 		} catch (error) {
 			console.log("__isIdExist error =>", error);
-			return thunkAPI.rejectWithValue(error.response.data);
+			const {
+				status,
+				data: { errorMessage },
+			} = error.response;
+			return thunkAPI.rejectWithValue({ statusCode: status, errorMessage });
 		}
 	},
 );
@@ -65,7 +79,7 @@ export const __requestSignUp = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			console.log("__requestSignUp payload =>", payload);
-			const response = await axios.post(`${BASE_URL}/member/signup`, payload);
+			const response = await axios.post(`${BASE_URL}/members/signup`, payload);
 			console.log("__requestSignUp response =>", response);
 			const data = {
 				statusCode: response.status,
@@ -86,7 +100,7 @@ export const __requestSignIn = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			console.log("__requestSignUp payload =>", payload);
-			const response = await axios.post(`${BASE_URL}/member/login`, payload);
+			const response = await axios.post(`${BASE_URL}/members/login`, payload);
 			console.log("__requestSignIn response =>", response);
 			const {
 				status,
@@ -102,7 +116,11 @@ export const __requestSignIn = createAsyncThunk(
 			});
 		} catch (error) {
 			console.log("__requestSignIn error =>", error);
-			return thunkAPI.rejectWithValue(error.response.data);
+			const {
+				status,
+				data: { errorMessage },
+			} = error.response;
+			return thunkAPI.rejectWithValue({ statusCode: status, errorMessage });
 		}
 	},
 );
@@ -117,6 +135,15 @@ const joinSlice = createSlice({
 		resetIdCheck: (state, _) => {
 			state.isCheckedId = false;
 		},
+		resetIdExist: (state, _) => {
+			state.isExistId = false;
+		},
+		resetNicknameExist: (state, _) => {
+			state.isExistNickname = false;
+		},
+		resetSignUpStatus: (state, _) => {
+			state.signInStatusCode = null;
+		},
 	},
 	extraReducers: {
 		// 닉네임 중복
@@ -127,16 +154,17 @@ const joinSlice = createSlice({
 		[__isNicknameExist.fulfilled]: (state, action) => {
 			console.log("__isNicknameExist.fulfilled =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.fulfilledData.statusCode;
-			state.statusMessage = action.payload.fulfilledData.msg;
+			state.statusCode = action.payload.statusCode;
+			state.statusMessage = action.payload.msg;
 			state.isCheckedNickname = action.payload.isExist;
+			state.isExistNickname = false;
 		},
 		[__isNicknameExist.rejected]: (state, action) => {
 			console.log("__isNicknameExist.rejected =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
-			state.statusMessage = action.payload.msg;
-			state.isCheckedNickname = action.payload.isExist;
+			if (action.payload.statusCode === 400) {
+				state.isExistNickname = true;
+			}
 		},
 		// 아이디 중복
 		[__isIdExist.pending]: (state, _) => {
@@ -149,13 +177,14 @@ const joinSlice = createSlice({
 			state.statusCode = action.payload.statusCode;
 			state.statusMessage = action.payload.msg;
 			state.isCheckedId = action.payload.isExist;
+			state.isExistNickname = false;
 		},
 		[__isIdExist.rejected]: (state, action) => {
 			console.log("__isIdExist.rejected =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
-			state.statusMessage = action.payload.msg;
-			state.isCheckedId = action.payload.isExist;
+			if (action.payload.statusCode === 400) {
+				state.isExistId = true;
+			}
 		},
 		// 회원가입
 		[__requestSignUp.pending]: (state, _) => {
@@ -165,14 +194,14 @@ const joinSlice = createSlice({
 		[__requestSignUp.fulfilled]: (state, action) => {
 			console.log("__requestSignUp.fulfilled =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
-			state.isCheckedId = action.payload.isExist;
+			state.signUpStatusCode = action.payload.statusCode;
+			state.isSignUp = true;
 		},
 		[__requestSignUp.rejected]: (state, action) => {
 			console.log("__requestSignUp.rejected =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
-			state.isCheckedId = action.payload.isExist;
+			state.signUpStatusCode = action.payload.statusCode;
+			state.isSignUp = false;
 		},
 		// 로그인
 		[__requestSignIn.pending]: (state, _) => {
@@ -182,18 +211,25 @@ const joinSlice = createSlice({
 		[__requestSignIn.fulfilled]: (state, action) => {
 			console.log("__requestSignIn fulfilled =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
+			state.signInStatusCode = action.payload.statusCode;
 			state.statusMessage = action.payload.successMsg;
 			localStorage.setItem("jwtToken", action.payload.token);
-			localStorage.setItem("nickname", action.payload.token);
+			localStorage.setItem("nickname", action.payload.nickname);
 		},
 		[__requestSignIn.rejected]: (state, action) => {
 			console.log("__requestSignIn rejected =>", action.payload);
 			state.isLoading = false;
-			state.statusCode = action.payload.statusCode;
+			state.signInStatusCode = action.payload.statusCode;
+			state.statusMessage = action.payload.successMsg;
 		},
 	},
 });
 
-export const { resetIdCheck, resetNicknameCheck } = joinSlice.actions;
+export const {
+	resetIdCheck,
+	resetNicknameCheck,
+	resetIdExist,
+	resetNicknameExist,
+	resetSignUpStatus,
+} = joinSlice.actions;
 export default joinSlice.reducer;
