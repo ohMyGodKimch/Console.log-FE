@@ -116,6 +116,63 @@ export const Box = styled.div`
 					height: 100vh;
 					z-index: 100;
 				`;
+			case "write-box":
+				return css`
+					max-height: 540px;
+					box-sizing: inherit;
+					display: block;
+					font-family: "맑은 고딕";
+					-webkit-font-smoothing: antialiased;
+					color: var(--text1);
+					input::placeholder {
+						font-family: "맑은 고딕";
+					}
+				`;
+			case "write-cover-box":
+				return css`
+					padding: 1rem;
+					box-sizing: inherit;
+				`;
+			case "write-btn-box":
+				return css`
+					width: 50%;
+					height: 64px;
+					position: fixed;
+					bottom: 0px;
+					z-index: 10;
+				`;
+			case "write-btn-box1":
+				return css`
+					padding-left: 1rem;
+					padding-right: 1rem;
+					height: 4rem;
+					width: 100%;
+					box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
+					background: var(--editor-footer);
+					display: flex;
+					-webkit-box-pack: justify;
+					justify-content: space-between;
+					-webkit-box-align: center;
+					align-items: center;
+				`;
+			case "mypage-info-box":
+				return css`
+					margin-top: 5.625rem;
+					box-sizing: border-box;
+					color: rgb(33, 37, 41);
+					display: block;
+					padding-left: 1rem;
+					padding-right: 1rem;
+				`;
+			case "mypage-image-box":
+				return css`
+					display: block;
+					width: 8rem;
+					height: 8rem;
+					border-radius: 50%;
+					object-fit: cover;
+					box-shadow: rgb(0 0 0 / 6%) 0px 0px 4px 0px;
+				`;
 			default:
 				break;
 		}

@@ -52,6 +52,26 @@ export const Input = styled.input`
 						border: 1px solid #21c997;
 					}
 				`;
+			case "write-input":
+				return css`
+					height: 43px;
+					font-size: 1.8rem;
+					background: transparent;
+					display: block;
+					padding: 0px;
+					width: 100%;
+					resize: none;
+					line-height: 1.5;
+					outline: none;
+					outline-color: initial;
+					outline-style: none;
+					outline-width: initial;
+					border: none;
+					font-size: bold;
+					color: var(--text1);
+					font-family: inherit;
+					box-sizing: inherit;
+				`;
 			default:
 				break;
 		}

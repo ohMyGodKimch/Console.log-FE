@@ -35,6 +35,15 @@ export const Image = styled.img`
 					width: 100%;
 					height: 167px;
 				`;
+			case "mypage-image":
+				return css`
+					display: block;
+					width: 8rem;
+					height: 8rem;
+					border-radius: 50%;
+					object-fit: cover;
+					box-shadow: rgb(0 0 0 / 6%) 0px 0px 4px 0px;
+				`;
 			default:
 				break;
 		}

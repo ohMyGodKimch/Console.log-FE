@@ -33,7 +33,6 @@ const SignInForm = ({
 		register,
 		formState: { errors },
 	} = useForm();
-
 	// Redux state -> 로그인 성공 실패 여부
 	const { signInStatusCode, isLoading } = useSelector(state => state.join);
 	// 알림창

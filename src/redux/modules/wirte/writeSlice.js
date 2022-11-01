@@ -1,27 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 const BASE_URL = process.env.REACT_APP_SERVER;
 //localhost:8080/
 // http://13.125.106.163:8080/
 
-axios.defaults.headers.post["Authorization"] = "X-AUTH_TOKEN";
+// axios.defaults.headers.post["Authorization"] = "X-AUTH_TOKEN";
 
 export const __postWrite = createAsyncThunk(
 	"postWrite",
 	async (payload, thunkAPI) => {
 		try {
-			const reponse = await axios.post(
-				`${BASE_URL}/boards`,
-				payload,
-				"Authorization",
-			);
-			// , {
-			// 	headers: {
-			// 		Authorization: "X-AUTH_TOKEN",
-			// 	},
-			// }
-
+			const jwtToken = localStorage.getItem("jwtToken");
+			const reponse = await axios.post(`${BASE_URL}/boards`, payload, {
+				headers: {
+					Authorization: jwtToken,
+					"Content-Type": "application/json",
+				},
+			});
 			// localStorage.setItem.headers("Authorization", "X-AUTH_TOKEN");
 
 			return thunkAPI.fulfillWithValue(reponse.data.headers);

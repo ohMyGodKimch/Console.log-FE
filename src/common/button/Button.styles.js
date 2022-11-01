@@ -111,6 +111,51 @@ export const Button = styled.button`
 					font-weight: 500;
 					background-color: transparent;
 				`;
+			case "write-left-btn":
+				return css`
+					height: 2.5rem;
+					padding: 0.5rem 1rem;
+					-webkit-box-align: center;
+					align-items: center;
+					background: none;
+					border-radius: 4px;
+					cursor: pointer;
+					border: none;
+					display: flex;
+					outline: none;
+					color: var(--text1);
+					text-align: center;
+					height: 40px;
+					font-weight: 400;
+					font-size: 1.125rem;
+					:hover {
+						background: #e9ecef;
+					}
+				`;
+			case "write-wrigth-btn":
+				return css`
+					margin-left: 0.75rem;
+					height: 2.5rem;
+					font-size: 1.125rem;
+					display: inline-flex;
+					-webkit-box-align: center;
+					align-items: center;
+					-webkit-box-pack: center;
+					justify-content: center;
+					font-weight: bold;
+					cursor: pointer;
+					outline: none;
+					border: none;
+					background: var(--primary1);
+					color: var(--button-text);
+					border-radius: 4px;
+					padding: 0px 1.25rem;
+					appearance: auto;
+					background-attachment: scroll;
+					background-clip: border-box;
+					background-color: rgb(18, 184, 134);
+					color: white;
+				`;
 			default:
 				break;
 		}
