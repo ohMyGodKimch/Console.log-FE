@@ -42,8 +42,8 @@ function Write() {
 		e.preventDefault();
 
 		const editorInstance = editorRef.current.getInstance();
-		const getContent_md = editorInstance.getMarkdown();
-		const content = getContent_md;
+		// const getContent_md = editorInstance.getMarkdown();
+		// const content = getContent_md;
 
 		// TODO
 		const getContent_html = editorInstance.getHTML();
