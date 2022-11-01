@@ -8,8 +8,8 @@ function MainListPage() {
 			<styles.MainListPage>
 				<Margin margin="11px 0 0 0">
 					<MainButtonGroup />
+					<MainList />
 				</Margin>
-				<MainList />
 			</styles.MainListPage>
 		</Flex>
 	);

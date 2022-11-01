@@ -9,24 +9,26 @@ import {
 	DataDisc,
 	DataTerm,
 } from "../../common";
-import { __getMainList } from "../../redux/modules/mainlist/mainlistSlice";
+import { __getMypage } from "../../redux/modules/mypage/mypageSlice";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const MypageCard = () => {
-	const list = useSelector(state => state.mainlist.mainlist);
-	console.log(list);
-	console.log(1);
+const MypageCard = ({ borderId }) => {
+	const mypage = useSelector(state => state.mypage.mypage);
+	console.log(mypage);
 	const dispatch = useDispatch();
-	console.log(list);
+
+	console.log(borderId);
 	useEffect(() => {
-		dispatch(__getMainList());
-	}, [dispatch]);
+		dispatch(__getMypage(borderId));
+		console.log(1);
+	}, [dispatch, borderId]);
 
 	return (
 		<>
-			{list && list.length > 0
-				? list.map((boards, id) => {
+			{mypage && mypage.length > 0
+				? mypage.map((mypage, id) => {
 						return (
 							<Box key={id} variant="main-item">
 								<Flex height="100%" width="100%" fd="column" jc="space-between">
@@ -34,11 +36,13 @@ const MypageCard = () => {
 										<Image variant="main-item" src="/images/flower.jpg" />
 										<Box variant="main-content">
 											<SecondHeading variant="item-header">
-												{boards.title}
+												{mypage.title}
 											</SecondHeading>
 											<Text
 												variant="main-item-content"
-												dangerouslySetInnerHTML={{ __html: boards.content }}
+												dangerouslySetInnerHTML={{
+													__html: mypage.content,
+												}}
 											></Text>
 										</Box>
 									</Box>

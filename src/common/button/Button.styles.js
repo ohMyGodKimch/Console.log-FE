@@ -156,6 +156,25 @@ export const Button = styled.button`
 					background-color: rgb(18, 184, 134);
 					color: white;
 				`;
+			case "user-edit-btn":
+				return css`
+					max-width: 768px;
+					font-size: 0.875rem;
+					text-align: center;
+					font-weight: 400;
+					background-color: rgb(0, 0, 0, 0);
+					background-origin: padding-box;
+				`;
+			case "user-edit-btn1":
+				return css`
+					max-width: 768px;
+					margin-left: 0.5rem;
+					font-size: 0.875rem;
+					text-align: center;
+					font-weight: 400;
+					background-color: rgb(0, 0, 0, 0);
+					background-origin: padding-box;
+				`;
 			default:
 				break;
 		}

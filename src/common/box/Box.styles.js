@@ -155,23 +155,90 @@ export const Box = styled.div`
 					-webkit-box-align: center;
 					align-items: center;
 				`;
+			case "mypage-main-box":
+				return css`
+					max-width: 768px;
+					width: 100%;
+					margin-left: auto;
+					margin-right: auto;
+				`;
 			case "mypage-info-box":
 				return css`
 					margin-top: 5.625rem;
-					box-sizing: border-box;
-					color: rgb(33, 37, 41);
+					max-width: 1024px;
+					padding-left: 1erm;
+					padding-right: 1erm;
+					box-sizing: inherit;
 					display: block;
-					padding-left: 1rem;
-					padding-right: 1rem;
+				`;
+			case "mypage-info-detail-box":
+				return css`
+					display: flex;
+					-webkit-box-align: center;
+					align-items: center;
 				`;
 			case "mypage-image-box":
 				return css`
-					display: block;
-					width: 8rem;
-					height: 8rem;
-					border-radius: 50%;
-					object-fit: cover;
-					box-shadow: rgb(0 0 0 / 6%) 0px 0px 4px 0px;
+					max-width: 768px;
+					margin-left: 0px;
+					margin-top: 1rem;
+					display: flex;
+					align-items: center;
+					-webkit-box-pack: center;
+				`;
+			case "mypage-profile-box":
+				return css`
+					display: flex;
+					flex-direction: column;
+					-webkit-box-pack: center;
+					justify-content: center;
+					margin-left: 1rem;
+				`;
+			case "mypage-id-box":
+				return css`
+					font-size: 1.125rem;
+					line-height: 1.5;
+					font-weight: bold;
+				`;
+			case "mypage-name-box":
+				return css`
+					max-width: 768px;
+					margin-top: 0.5rem;
+					font-size: 0.875rem;
+					letter-spacing: -0.004em;
+				`;
+			case "mypage-line-box":
+				return css`
+					background: rgb(233, 236, 239);
+					max-width: 768px;
+					margin-top: 2rem;
+					margin-bottom: 1.5rem;
+					width: 100%;
+					height: 1px;
+				`;
+			case "user-title-box":
+				return css`
+					margin-top: 2rem;
+					max-width: 768px;
+					width: 100%;
+					margin-left: auto;
+					margin-right: auto;
+					color: rgb(33, 37, 41);
+				`;
+			case "user-head-wrapper":
+				return css`
+					max-width: 1024px;
+					padding-left: 1erm;
+					padding-right: 1erm;
+				`;
+			case "user-edit-box":
+				return css`
+					max-width: 1024px;
+					margin-top: -0.5rem;
+					margin-bottom: 1.5rem;
+					display: flex;
+					justify-content: flex-end;
+					color: rgb(33, 37, 41);
 				`;
 			default:
 				break;

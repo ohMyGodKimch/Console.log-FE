@@ -17,6 +17,7 @@ export const TextArea = styled.textarea`
 					height: 500px;
 					background-color: aliceblue;
 				`;
+
 			default:
 				break;
 		}

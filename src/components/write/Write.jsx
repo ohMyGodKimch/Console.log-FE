@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __postWrite } from "../../redux/modules/wirte/writeSlice";
-import { Box, Form, Input, Button, FirstHeading } from "../../common";
+import { Box, Input, Button } from "../../common";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 

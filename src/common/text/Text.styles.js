@@ -33,10 +33,18 @@ export const Text = styled.p`
 					color: #4a5158;
 					font-weight: 500;
 				`;
-			case "join-alert":
+			case "user-header":
 				return css`
-					color: #21c997;
+					font-size: 2.25rem;
+					line-height: 1.5;
+					letter-spacing: -0.004em;
+					margin-top: 0px;
+					font-weight: 800;
+					color: rgb(33, 37, 41);
+					margin-bottom: 2rem;
+					word-break: keep-all;
 				`;
+
 			default:
 				break;
 		}

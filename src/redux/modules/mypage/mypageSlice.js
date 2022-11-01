@@ -3,12 +3,14 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_SERVER;
 
-export const __getMainList = createAsyncThunk(
-	"getMainList",
-	async (payload, thunkAPI) => {
+export const __getMypage = createAsyncThunk(
+	"getMypage",
+	async (boardId, thunkAPI) => {
 		try {
-			const response = await axios.get(`${BASE_URL}/boards`);
+			const response = await axios.get(`${BASE_URL}/boards/1`);
 			console.log(response);
+			console.log(3);
+			// console.log(payload);
 			return thunkAPI.fulfillWithValue(response.data);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
@@ -17,28 +19,28 @@ export const __getMainList = createAsyncThunk(
 );
 
 const initialState = {
-	list: [1, 2, 3],
+	mypage: [],
 	isLoding: false,
 	error: null,
 };
 
-export const mainlistSlice = createSlice({
-	name: "mainlist",
+export const mypageSlice = createSlice({
+	name: "mypage",
 	initialState,
 	reducers: {},
 	extraReducers: {
-		[__getMainList.pending]: state => {
+		[__getMypage.pending]: state => {
 			state.isLoading = true;
 		},
-		[__getMainList.fulfilled]: (state, action) => {
+		[__getMypage.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.mainlist = action.payload;
+			state.mypage = action.boardId;
 		},
-		[__getMainList.rejected]: state => {
+		[__getMypage.rejected]: state => {
 			state.isLoading = false;
 		},
 	},
 });
 
-export const {} = mainlistSlice.actions;
-export default mainlistSlice.reducer;
+export const {} = mypageSlice.actions;
+export default mypageSlice.reducer;
