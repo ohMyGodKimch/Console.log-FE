@@ -33,6 +33,7 @@ const SignInForm = ({
 		register,
 		formState: { errors },
 	} = useForm();
+
 	// Redux state -> 로그인 성공 실패 여부
 	const { signInStatusCode, isLoading } = useSelector(state => state.join);
 	// 알림창
@@ -41,8 +42,9 @@ const SignInForm = ({
 	// 로그인 성공, 실패에 따른 처리
 	useEffect(() => {
 		if (signInStatusCode === 200 && !isLoading) {
+			setIsLoginClick(prev => !prev);
+			console.log(isLoginClick);
 			dispatch(resetSignUpStatus());
-			setIsLoginClick(!isLoginClick);
 		} else if (signInStatusCode === 400 && !isLoading) {
 			dispatch(resetSignUpStatus());
 			signInRejectAlert();

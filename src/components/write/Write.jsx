@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { __postWrite } from "../../redux/modules/wirte/writeSlice";
 import { Box, Form, Input, Button, FirstHeading } from "../../common";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // TOAST UI Editor import
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 
 // TOAST UI Editor Plugins
-// import "tui-chart/dist/tui-chart.css";
+import "tui-color-picker/dist/tui-color-picker.css";
 import chart from "@toast-ui/editor-plugin-chart";
-// import "highlight.js/styles/github.css";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import "tui-color-picker/dist/tui-color-picker.css";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
@@ -20,6 +20,7 @@ import uml from "@toast-ui/editor-plugin-uml";
 
 function Write() {
 	const editorRef = useRef();
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { write } = useSelector(state => state.write);
@@ -36,52 +37,70 @@ function Write() {
 		});
 	};
 
-	const onSubmitHandle = e => {
+	const btnClickListener = e => {
 		e.preventDefault();
+
 		const editorInstance = editorRef.current.getInstance();
-		const content = editorInstance.getMarkdown();
+		const getContent_md = editorInstance.getMarkdown();
+		const content = getContent_md;
+
 		// TODO
 		// const getContent_html = editorInstance.getHTML();
-		// const content = editorInstance.getHTML();
 
-		console.log(input);
-		console.log(content);
+		// const content = getContent_html;
+		// console.log(content);
 
 		setInput(prev => {
 			return { ...prev, content: content };
 		});
 		setIsSubmit(true);
-		// dispatch(__postWrite(input, content));
 	};
 
-	// c
+	const uploadImage = async (blob, callback) => {
+		const formData = new FormData();
+		formData.append("file", blob);
+
+		// 1. 첨부된 이미지 파일을 서버로 전송후, 이미지 경로 url을 받아온다.
+		const url = await axios.post(`${BASE_URL}/boards`, {
+			header: { "content-type": "multipart/formdata" },
+			body: {
+				formData,
+			},
+		});
+		console.log(url);
+		// 2. 첨부된 이미지를 화면에 표시
+		// if (url) {
+		// 	callback(url, "image");
+		// 	images.push(blob);
+		// }
+
+		console.log(blob);
+	};
+
 	useEffect(() => {
-		if (setIsSubmit) {
+		if (isSubmit) {
 			dispatch(__postWrite(input));
+			setIsSubmit(false);
 		}
 	}, [dispatch, input, isSubmit]);
-
-	// const onUploadImage = (blob, callback) => {
-	// 	console.log(blob);
-	// };
+	const BASE_URL = process.env.REACT_APP_SERVER;
 
 	return (
 		<>
-			<Form onSubmit={onSubmitHandle}>
-				<Input
-					type="text"
-					name="title"
-					placeholder="제목을 입력해주세요"
-					value={input.title}
-					onChange={onChangeHandler}
-				/>
-
+			<Input
+				type="text"
+				name="title"
+				placeholder="제목을 입력해주세요"
+				value={input.title}
+				onChange={onChangeHandler}
+			/>
+			<>
 				<Editor
+					previewStyle="vertical"
 					height="600px"
+					initialEditType="markdown"
 					placeholder="내용을 입력해주세요"
 					usageStatistics={false}
-					previewStyle="vertical"
-					initialEditType="markdown"
 					plugins={[
 						chart,
 						codeSyntaxHighlight,
@@ -89,15 +108,15 @@ function Write() {
 						tableMergedCell,
 						uml,
 					]}
+					hooks={{
+						addImageBlobHook: uploadImage,
+					}}
 					ref={editorRef}
-					// hooks={{
-					// 	addImageBlobHook: onUploadImage,
-					// }}
 				/>
-				<div>
-					<Button type="submit">클릭</Button>
-				</div>
-			</Form>
+			</>
+			<div>
+				<Button onClick={btnClickListener}>클릭</Button>
+			</div>
 			<div>
 				<button
 					type="button"

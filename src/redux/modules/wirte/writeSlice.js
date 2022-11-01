@@ -11,7 +11,6 @@ export const __postWrite = createAsyncThunk(
 	"postWrite",
 	async (payload, thunkAPI) => {
 		try {
-			console.log(payload);
 			const reponse = await axios.post(
 				`${BASE_URL}/boards`,
 				payload,

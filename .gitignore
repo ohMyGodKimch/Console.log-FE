@@ -9,8 +9,8 @@ bin-release/
 
 # misc
 .env
-
 db.json
+
 
 # Executables
 *.swf
