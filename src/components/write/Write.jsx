@@ -14,7 +14,7 @@ import "tui-color-picker/dist/tui-color-picker.css";
 import chart from "@toast-ui/editor-plugin-chart";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import "tui-color-picker/dist/tui-color-picker.css";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+// import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
 import uml from "@toast-ui/editor-plugin-uml";
 
@@ -42,12 +42,11 @@ function Write() {
 		e.preventDefault();
 
 		const editorInstance = editorRef.current.getInstance();
-		const getContent_md = editorInstance.getMarkdown();
-		const content = getContent_md;
+		// const getContent_md = editorInstance.getMarkdown();
 
 		// TODO
-		// const getContent_html = editorInstance.getHTML();
-
+		const getContent_html = editorInstance.getHTML();
+		const content = getContent_html;
 		// const content = getContent_html;
 		// console.log(content);
 
@@ -62,7 +61,7 @@ function Write() {
 		formData.append("file", blob);
 
 		// 1. 첨부된 이미지 파일을 서버로 전송후, 이미지 경로 url을 받아온다.
-		const url = await axios.post(`${BASE_URL}/boards`, {
+		const url = await axios.post(`${BASE_URL}/boards/${1}/images`, {
 			header: { "content-type": "multipart/formdata" },
 			body: {
 				formData,
@@ -103,14 +102,14 @@ function Write() {
 			<>
 				<Editor
 					previewStyle="vertical"
-					height="610px"
+					height="100vh"
 					initialEditType="markdown"
 					placeholder="당신의 이야기를 적어보세요..."
 					usageStatistics={false}
 					plugins={[
 						chart,
 						codeSyntaxHighlight,
-						colorSyntax,
+						// colorSyntax,
 						tableMergedCell,
 						uml,
 					]}
