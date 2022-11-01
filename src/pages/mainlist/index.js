@@ -1,2 +1,3 @@
 import MainListPage from "./MainListPage";
-export { MainListPage };
+
+export default MainListPage;

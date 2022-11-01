@@ -42,7 +42,8 @@ function Write() {
 		e.preventDefault();
 
 		const editorInstance = editorRef.current.getInstance();
-		// const getContent_md = editorInstance.getMarkdown();
+		const getContent_md = editorInstance.getMarkdown();
+		const content = getContent_md;
 
 		// TODO
 		const getContent_html = editorInstance.getHTML();
@@ -81,8 +82,9 @@ function Write() {
 		if (isSubmit) {
 			dispatch(__postWrite(input));
 			setIsSubmit(false);
+			navigate("/");
 		}
-	}, [dispatch, input, isSubmit]);
+	}, [dispatch, navigate, input, isSubmit]);
 	const BASE_URL = process.env.REACT_APP_SERVER;
 
 	return (
@@ -102,7 +104,7 @@ function Write() {
 			<>
 				<Editor
 					previewStyle="vertical"
-					height="100vh"
+					height="610px"
 					initialEditType="markdown"
 					placeholder="당신의 이야기를 적어보세요..."
 					usageStatistics={false}

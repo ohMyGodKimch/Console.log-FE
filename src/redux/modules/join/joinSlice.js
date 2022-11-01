@@ -216,6 +216,7 @@ const joinSlice = createSlice({
 			state.isLoading = false;
 			state.signInStatusCode = action.payload.statusCode;
 			state.statusMessage = action.payload.successMsg;
+			state.isLogin = true;
 			state.token = action.payload.token;
 			localStorage.setItem("jwtToken", action.payload.token);
 			localStorage.setItem("nickname", action.payload.nickname);
