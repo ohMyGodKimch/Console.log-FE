@@ -7,7 +7,6 @@ import { MyapgeInfo } from "../../components/mypage";
 function Mypage() {
 	return (
 		<>
-			{" "}
 			<Flex width="100%" height="100vh" jc="center">
 				<styles.MypageLayout>
 					<MainNav />

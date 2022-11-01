@@ -173,6 +173,13 @@ export const Box = styled.div`
 					object-fit: cover;
 					box-shadow: rgb(0 0 0 / 6%) 0px 0px 4px 0px;
 				`;
+			case "main-item-sub-info":
+				return css`
+					padding: 1rem;
+					width: 324px;
+					font-size: 0.75rem;
+					color: #8f969d;
+				`;
 			default:
 				break;
 		}
