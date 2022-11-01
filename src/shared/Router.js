@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MainLayout } from "../layout";
 import WritePage from "../pages/write/WritePage";
-import { MainItem } from "../components/mainlist";
 import { Mypage } from "../pages/mypage";
 import { Test } from "../pages/test";
 import { EditPage } from "../pages/edit";
-import { MainListPage } from "../pages/mainlist";
+import MainListPage from "../pages/mainlist";
 
 const Router = () => {
 	return (
