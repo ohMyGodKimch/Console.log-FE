@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __upPostWrite } from "../../redux/modules/wirte/writeSlice";
+import {
+	__upPostWrite,
+	__deleteWrite,
+} from "../../redux/modules/wirte/writeSlice";
 import { Box, Input, Button } from "../../common";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -25,14 +28,14 @@ function Write() {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const write = useSelector(state => state);
+	const { write } = useSelector(state => state.write);
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [input, setInput] = useState({
 		title: "",
 		content: "",
 		images: [],
 	});
-	console.log(write);
+
 	const onChangeHandler = e => {
 		const { name, value } = e.target;
 		setInput(prev => {
@@ -44,41 +47,14 @@ function Write() {
 		e.preventDefault();
 
 		const editorInstance = editorRef.current.getInstance();
-		// const getContent_md = editorInstance.getMarkdown();
-		// const content = getContent_md;
-
-		// TODO
 		const getContent_html = editorInstance.getHTML();
 		const content = getContent_html;
-		// const content = getContent_html;
-		// console.log(content);
 
 		setInput(prev => {
 			return { ...prev, content: content };
 		});
 		setIsSubmit(true);
 	};
-
-	// const uploadImage = async (blob, callback) => {
-	// 	const formData = new FormData();
-	// 	formData.append("images", blob);
-
-	// 	// 1. 첨부된 이미지 파일을 서버로 전송후, 이미지 경로 url을 받아온다.
-	// 	const url = await axios.post(`${BASE_URL}/boards/${1}/images`, {
-	// 		header: { "content-type": "multipart/formdata" },
-	// 		body: {
-	// 			formData,
-	// 		},
-	// 	});
-	// 	console.log(url);
-	// 	// 2. 첨부된 이미지를 화면에 표시
-	// 	if (url) {
-	// 		callback(url, "images");
-	// 		images.push(blob);
-	// 	}
-
-	// 	console.log(blob);
-	// };
 
 	const uploadImage = async (blob, callback) => {
 		console.log("blob =>", blob);
@@ -147,6 +123,7 @@ function Write() {
 						variant="write-left-btn"
 						type="button"
 						onClick={() => {
+							// dispatch(__deleteWrite());
 							navigate("/main/");
 						}}
 					>

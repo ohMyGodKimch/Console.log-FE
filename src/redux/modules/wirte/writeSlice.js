@@ -26,6 +26,7 @@ export const __postWrite = createAsyncThunk(
 		}
 	},
 );
+
 export const __upPostWrite = createAsyncThunk(
 	"upPostWrite",
 	async (payload, thunkAPI) => {
@@ -87,7 +88,7 @@ export const __putWrite = createAsyncThunk(
 				},
 			);
 
-			return thunkAPI.fulfillWithValue(response.data);
+			return thunkAPI.fulfillWithValue(response.data.headers);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.data);
 		}
@@ -130,7 +131,7 @@ export const writeSlice = createSlice({
 		},
 		[__deleteWrite.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.mainlist = action.payload;
+			state.write = action.payload;
 		},
 		[__deleteWrite.rejected]: state => {
 			state.isLoading = false;
@@ -140,7 +141,7 @@ export const writeSlice = createSlice({
 		},
 		[__putWrite.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.mainlist = action.payload;
+			state.write = action.payload;
 		},
 		[__putWrite.rejected]: state => {
 			state.isLoading = false;
