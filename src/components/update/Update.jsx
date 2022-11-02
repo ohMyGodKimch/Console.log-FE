@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __upPostWrite } from "../../redux/modules/wirte/writeSlice";
+import { __putWrite } from "../../redux/modules/wirte/writeSlice";
 import { Box, Input, Button } from "../../common";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -18,21 +18,24 @@ import "tui-color-picker/dist/tui-color-picker.css";
 import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
 import uml from "@toast-ui/editor-plugin-uml";
 
-function Write() {
+function Update() {
 	const editorRef = useRef();
 	const params = useParams();
 	console.log(params);
-
+	const { id } = useParams();
+	console.log(id);
+	// const { boardId } = useParams;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const write = useSelector(state => state);
+	const { write } = useSelector(state => state.write);
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [input, setInput] = useState({
+		id,
 		title: "",
 		content: "",
 		images: [],
 	});
-	console.log(write);
+	// console.log(boardId);
 	const onChangeHandler = e => {
 		const { name, value } = e.target;
 		setInput(prev => {
@@ -100,11 +103,11 @@ function Write() {
 
 	useEffect(() => {
 		if (isSubmit) {
-			dispatch(__upPostWrite(input));
+			dispatch(__putWrite(input));
 			setIsSubmit(false);
 			navigate("/");
 		}
-	}, [dispatch, navigate, input, isSubmit]);
+	}, [dispatch, navigate, input, isSubmit, id]);
 	const BASE_URL = process.env.REACT_APP_SERVER;
 
 	return (
@@ -161,4 +164,4 @@ function Write() {
 	);
 }
 
-export default Write;
+export default Update;

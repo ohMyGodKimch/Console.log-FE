@@ -5,6 +5,7 @@ import { Mypage } from "../pages/mypage";
 import { Test } from "../pages/test";
 import { EditPage } from "../pages/edit";
 import MainListPage from "../pages/mainlist";
+import UpdatePage from "./../pages/update/UpdatePage";
 
 const Router = () => {
 	return (
@@ -17,7 +18,7 @@ const Router = () => {
 					<Route path="/main" element={<MainListPage />} />
 					<Route path="/mypage/:id" element={<Mypage />} />
 					<Route path="/edit/:id" element={<EditPage />} />
-					{/* <Route path="/main" element={<MainItem />} /> */}
+					<Route path="/update/:id" element={<UpdatePage />} />
 
 					<Route path="/test" element={<Test />} />
 				</Routes>

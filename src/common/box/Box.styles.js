@@ -247,6 +247,49 @@ export const Box = styled.div`
 					font-size: 0.75rem;
 					color: #8f969d;
 				`;
+			case "user-name-box":
+				return css`
+					-webkit-box-align: center;
+					align-items: center;
+					font-size: 1rem;
+					display: flex;
+					justify-content: space-between;
+				`;
+			case "user-list-navi":
+				return css`
+					font-size: 1rem;
+					color: rgb(73, 80, 87);
+				`;
+			case "user-username":
+				return css`
+					font-size: 1rem;
+					color: rgb(73, 80, 87);
+				`;
+			case "user-span":
+				return css`
+					margin-left: 0.5rem;
+					margin-right: 0.5rem;
+				`;
+			case "image-box":
+				return css`
+					max-height: 100vh;
+					max-width: 100%;
+					width: auto;
+					margin: 2rem auto 0px;
+					height: auto;
+					object-fit: contain;
+					display: block;
+				`;
+			case "tag-box":
+				return css`
+					max-width: 768px;
+					font-size: 1.125rem;
+					transition: color 0.125s;
+					line-height: 1.7;
+					letter-spacing: -0.004em;
+					word-break: keep-all;
+					overflow-wrap: break-word;
+				`;
 			default:
 				break;
 		}

@@ -9,11 +9,12 @@ const MainList = () => {
 	const dispatch = useDispatch();
 	// Redux Store
 	const { mainList, isLoding } = useSelector(state => state.mainlist);
-	console.log("mainList => ", mainList, "isLoading =>", isLoding);
+	// console.log("mainList => ", mainList, "isLoading =>", isLoding);
 
 	useEffect(() => {
 		dispatch(__getMainList());
 	}, [dispatch]);
+	// console.log(mainList);
 
 	if (isLoding) return <div>로딩중</div>;
 

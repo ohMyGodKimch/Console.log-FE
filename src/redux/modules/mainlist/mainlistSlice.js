@@ -17,9 +17,6 @@ export const __getMainList = createAsyncThunk(
 				status,
 				data: { data },
 			} = await axios.get(`${BASE_URL}/boards`);
-
-			console.log("response  status =>", status, "data =>", data);
-
 			return thunkAPI.fulfillWithValue({ status, mainList: data });
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.response.data);
@@ -54,32 +51,32 @@ export const mainlistSlice = createSlice({
 	extraReducers: {
 		// 메인페이지 리스트 불러오기
 		[__getMainList.pending]: (_, state) => {
-			console.log("__getMainList.pending");
+			// console.log("__getMainList.pending");
 			state.isLoading = true;
 		},
 		[__getMainList.fulfilled]: (state, action) => {
-			console.log("__getMainList fulfilled  payload=>", action.payload);
+			// console.log("__getMainList fulfilled  payload=>", action.payload);
 			state.isLoading = false;
 			state.statusCode = action.payload.status;
 			state.mainList = action.payload.mainList;
 		},
 		[__getMainList.rejected]: (state, action) => {
-			console.log("__getMainList rejected  payload => ", action.payload);
+			// console.log("__getMainList rejected  payload => ", action.payload);
 			state.isLoading = false;
 		},
 		// 포스팅
 		[__addBoardItem.pending]: (_, state) => {
-			console.log("__addBoardItem.pending");
+			// console.log("__addBoardItem.pending");
 			state.isLoading = true;
 		},
 		[__addBoardItem.fulfilled]: (state, action) => {
-			console.log("__addBoardItem fulfilled  payload=>", action.payload);
+			// console.log("__addBoardItem fulfilled  payload=>", action.payload);
 			state.isLoading = false;
 			state.statusCode = action.payload.status;
 			// state.mainList.push(action.payload);
 		},
 		[__addBoardItem.rejected]: (state, action) => {
-			console.log("__addBoardItem rejected  payload => ", action.payload);
+			// console.log("__addBoardItem rejected  payload => ", action.payload);
 			state.isLoading = false;
 		},
 	},

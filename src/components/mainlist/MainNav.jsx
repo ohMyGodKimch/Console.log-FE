@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import JoinLayout from "../../layout/join";
 import { Nav, FirstHeading, Box, Button, Image, Flex } from "../../common";
 import { SignInForm, SignUpForm } from "../../components/join";
 import { resetToken } from "../../redux/modules/join/joinSlice";
+import { __postWrite } from "../../redux/modules/wirte/writeSlice";
 
 const MainNav = () => {
 	// React Router
@@ -51,7 +52,8 @@ const MainNav = () => {
 												<Button
 													variant="new-post"
 													onClick={() => {
-														navigate("/boards/");
+														dispatch(__postWrite());
+														navigate(`/boards/`);
 													}}
 												>
 													새 글 작성

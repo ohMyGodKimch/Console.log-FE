@@ -10,11 +10,18 @@ import {
 	DataTerm,
 	Hidden,
 } from "../../common";
+import { useNavigate } from "react-router-dom";
 
 const MainItem = ({ postData }) => {
+	const navigate = useNavigate();
 	return (
 		<>
-			<Box variant="main-item">
+			<Box
+				variant="main-item"
+				onClick={() => {
+					navigate(`/edit/${postData.boardId}`);
+				}}
+			>
 				<Flex height="100%" width="100%" fd="column" jc="space-between">
 					<Box variant="main-item-image">
 						<Image variant="main-item" src="/images/flower.jpg" />
