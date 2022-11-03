@@ -214,6 +214,7 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 										)}
 										<Margin margin="10px 0 10px 0">
 											<Input
+												type="password"
 												placeholder="비밀번호를 입력해주세요."
 												{...register("password", {
 													required: true,
@@ -233,6 +234,7 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 										)}
 										<Margin margin="10px 0 5px 0">
 											<Input
+												type="password"
 												placeholder="비밀번호를 재입력해주세요."
 												{...register("passwordConfirm", {
 													required: true,
