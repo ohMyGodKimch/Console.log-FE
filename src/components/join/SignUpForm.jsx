@@ -154,6 +154,7 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 											<Input
 												variant="join-check"
 												placeholder="아이디를 입력해주세요."
+												maxLength="10"
 												{...register("id", {
 													required: true,
 													pattern: /^(?=.*[a-zA-Z])[-a-zA-Z0-9]{4,10}$/,
@@ -208,6 +209,7 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 										<Margin margin="10px 0 10px 0">
 											<Input
 												type="password"
+												maxLength="20"
 												placeholder="비밀번호를 입력해주세요."
 												{...register("password", {
 													required: true,
@@ -228,6 +230,7 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 										<Margin margin="10px 0 5px 0">
 											<Input
 												type="password"
+												maxLength="20"
 												placeholder="비밀번호를 재입력해주세요."
 												{...register("passwordConfirm", {
 													required: true,
