@@ -339,20 +339,8 @@ export const Box = styled.div`
 				return css`
 					width: 80%;
 				`;
-			case "user-info-box":
-				return css`
-					margin-top: 8rem;
-					margin-bottom: 3rem;
-					padding-left: 1rem;
-					padding-right: 1rem;
-				`;
-			case "user-detail-box":
-				return css`
-					display: felx;
-					align-items: center;
-					-webkit-box-align: center;
-				`;
-
+			case "comment-info-wrap":
+				return css``;
 			default:
 				break;
 		}
