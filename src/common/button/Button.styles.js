@@ -210,6 +210,13 @@ export const Button = styled.button`
 					font-size: 15px;
 					cursor: pointer;
 				`;
+			case "comment-edit":
+				return css`
+					margin-top: 20px;
+					color: #383535;
+					background-color: transparent;
+					cursor: pointer;
+				`;
 			default:
 				break;
 		}

@@ -55,12 +55,6 @@ const CommentItem = ({ item, boardId }) => {
 						<Box variant="comment-edit-wrap">
 							<Button
 								variant="comment-edit"
-								onClick={() => dispatch(__editComment())}
-							>
-								수정
-							</Button>
-							<Button
-								variant="comment-edit"
 								onClick={() =>
 									dispatch(
 										__deleteComment({ commentId: item.commentId, boardId }),

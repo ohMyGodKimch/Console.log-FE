@@ -273,7 +273,7 @@ export const Box = styled.div`
 					margin-top: 3rem;
 					margin-left: auto;
 					margin-right: auto;
-					border-bottom: 1px solid #f1f3f5;
+					border-bottom: 1px solid #cfd0d1;
 				`;
 			case "comment-input-wrap":
 				return css`
