@@ -33,6 +33,10 @@ export const Text = styled.p`
 					color: #4a5158;
 					font-weight: 500;
 				`;
+			case "join-alert":
+				return css`
+					color: #21c997;
+				`;
 			case "user-header":
 				return css`
 					font-size: 2.25rem;

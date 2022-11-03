@@ -39,7 +39,7 @@ export const __getNextList = createAsyncThunk(
 			const { page } = thunkAPI.getState().mainlist;
 			console.log("page =>", page);
 			const response = await axios.get(`${BASE_URL}/boards/infinite-scroll`, {
-				params: { page: page, size: 10, sortBy: "createdAt", isAsc: false },
+				params: { page: page, size: 16, sortBy: "createdAt", isAsc: false },
 			});
 			console.log("response =>", response);
 			const {
@@ -82,7 +82,7 @@ export const mainlistSlice = createSlice({
 			state.isLoding = false;
 			state.page += 1;
 			state.mainList.push(...action.payload);
-			if (action.payload.length <= 10) {
+			if (action.payload.length < 10) {
 				state.isNext = false;
 			}
 		},

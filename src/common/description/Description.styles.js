@@ -40,6 +40,17 @@ export const DataDesc = styled.dd`
 					font-size: 13px;
 					font-weight: 600;
 				`;
+			case "comment-nickname":
+				return css`
+					font-size: 1rem;
+					font-weight: 700;
+				`;
+			case "comment-date":
+				return css`
+					margin-top: 0.5rem;
+					color: #868e96;
+					font-size: 0.875rem;
+				`;
 			default:
 				break;
 		}
