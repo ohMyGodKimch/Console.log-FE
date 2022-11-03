@@ -146,7 +146,7 @@ function Write() {
 						type="button"
 						onClick={e => {
 							dispatch(__upDeleteWrite(input));
-							// navigate("/main/");
+							navigate("/");
 						}}
 					>
 						← 나가기

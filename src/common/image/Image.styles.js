@@ -63,6 +63,10 @@ export const Image = styled.img`
 					object-fit: contain;
 					display: block;
 				`;
+			case "user-info-image-box":
+				return css`
+					box-sizing: border-box;
+				`;
 			default:
 				break;
 		}

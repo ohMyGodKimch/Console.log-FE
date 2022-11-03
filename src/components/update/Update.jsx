@@ -123,7 +123,7 @@ function Update() {
 						variant="write-left-btn"
 						type="button"
 						onClick={() => {
-							navigate("/main/");
+							navigate("/");
 						}}
 					>
 						← 나가기
