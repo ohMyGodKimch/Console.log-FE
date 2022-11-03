@@ -50,7 +50,7 @@ function Edit() {
 				<Box>
 					<Text variant="user-header">{write?.title}</Text>
 
-					{write.writer !== write.writer ? (
+					{write.writer == write.writer ? (
 						<Box variant="user-edit-box">
 							<Button variant="user-edit-btn">통계</Button>
 							<Button
