@@ -4,8 +4,8 @@ export const DataList = ({ children, ...props }) => {
 	return <styles.DataList {...props}>{children}</styles.DataList>;
 };
 
-export const DataDisc = ({ children, ...props }) => {
-	return <styles.DataDisc {...props}>{children}</styles.DataDisc>;
+export const DataDesc = ({ children, ...props }) => {
+	return <styles.DataDesc {...props}>{children}</styles.DataDesc>;
 };
 
 export const DataTerm = ({ children, ...props }) => {

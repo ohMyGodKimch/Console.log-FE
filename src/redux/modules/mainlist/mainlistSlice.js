@@ -4,28 +4,12 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_SERVER;
 
 const initialState = {
-	mainList: null,
 	isLoding: false,
 	statusCode: null,
+	mainList: [],
+	page: 1,
+	isNext: true,
 };
-
-export const __getMainList = createAsyncThunk(
-	"getMainList",
-	async (_, thunkAPI) => {
-		try {
-			const {
-				status,
-				data: { data },
-			} = await axios.get(`${BASE_URL}/boards`);
-
-			console.log("response  status =>", status, "data =>", data);
-
-			return thunkAPI.fulfillWithValue({ status, mainList: data });
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error.response.data);
-		}
-	},
-);
 
 // 포스팅
 export const __addBoardItem = createAsyncThunk(
@@ -47,26 +31,32 @@ export const __addBoardItem = createAsyncThunk(
 	},
 );
 
+// 무한스크롤로 리스트 받아오기
+export const __getNextList = createAsyncThunk(
+	"getNextTodo",
+	async (payload, thunkAPI) => {
+		try {
+			const { page } = thunkAPI.getState().mainlist;
+			console.log("page =>", page);
+			const response = await axios.get(`${BASE_URL}/boards/infinite-scroll`, {
+				params: { page: page, size: 10, sortBy: "createdAt", isAsc: false },
+			});
+			console.log("response =>", response);
+			const {
+				data: { boardSlice },
+			} = response;
+			return thunkAPI.fulfillWithValue(boardSlice);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error);
+		}
+	},
+);
+
 export const mainlistSlice = createSlice({
 	name: "mainlist",
 	initialState,
 	reducers: {},
 	extraReducers: {
-		// 메인페이지 리스트 불러오기
-		[__getMainList.pending]: (_, state) => {
-			console.log("__getMainList.pending");
-			state.isLoading = true;
-		},
-		[__getMainList.fulfilled]: (state, action) => {
-			console.log("__getMainList fulfilled  payload=>", action.payload);
-			state.isLoading = false;
-			state.statusCode = action.payload.status;
-			state.mainList = action.payload.mainList;
-		},
-		[__getMainList.rejected]: (state, action) => {
-			console.log("__getMainList rejected  payload => ", action.payload);
-			state.isLoading = false;
-		},
 		// 포스팅
 		[__addBoardItem.pending]: (_, state) => {
 			console.log("__addBoardItem.pending");
@@ -81,6 +71,23 @@ export const mainlistSlice = createSlice({
 		[__addBoardItem.rejected]: (state, action) => {
 			console.log("__addBoardItem rejected  payload => ", action.payload);
 			state.isLoading = false;
+		},
+		// 무한스크롤 리스트 가져오기
+		[__getNextList.pending]: (state, action) => {
+			console.log("__getNextTodo pending");
+			state.isLoading = true;
+		},
+		[__getNextList.fulfilled]: (state, action) => {
+			console.log("__getNextTodo fulfilled => ", action.payload);
+			state.isLoding = false;
+			state.page += 1;
+			state.mainList.push(...action.payload);
+			if (action.payload.length <= 10) {
+				state.isNext = false;
+			}
+		},
+		[__getNextList.rejected]: (_, action) => {
+			console.log("__getNextTodo rejected =>", action.payload);
 		},
 	},
 });

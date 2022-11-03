@@ -11,7 +11,7 @@ import Image from "./image";
 import Margin from "./margin";
 import Hidden from "./hidden";
 import { FirstHeading, SecondHeading, ThirdHeading } from "./heading";
-import { DataList, DataDisc, DataTerm } from "./description";
+import { DataList, DataDesc, DataTerm } from "./description";
 
 export {
 	Box,
@@ -28,7 +28,7 @@ export {
 	Image,
 	Margin,
 	DataList,
-	DataDisc,
+	DataDesc,
 	DataTerm,
 	Hidden,
 	Input,

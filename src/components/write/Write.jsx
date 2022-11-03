@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { __postWrite } from "../../redux/modules/wirte/writeSlice";
 import { Box, Input, Button } from "../../common";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,6 @@ function Write() {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { write } = useSelector(state => state.write);
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [input, setInput] = useState({
 		title: "",

@@ -6,7 +6,7 @@ import {
 	Image,
 	Margin,
 	DataList,
-	DataDisc,
+	DataDesc,
 	DataTerm,
 	Hidden,
 } from "../../common";
@@ -33,7 +33,7 @@ const MainItem = ({ postData }) => {
 									<Hidden>
 										<DataTerm>작성일</DataTerm>
 									</Hidden>
-									<DataDisc>{postData.dayBefore} ·</DataDisc>
+									<DataDesc>{postData.dayBefore} ·</DataDesc>
 								</Box>
 								<Box>
 									<Text>{postData.commentCount}개의 댓글</Text>
@@ -54,7 +54,7 @@ const MainItem = ({ postData }) => {
 									<DataTerm variant="main-item">by</DataTerm>
 								</Margin>
 								<Margin display="inline-block" margin="0 0 0 5px">
-									<DataDisc variant="main-item">{postData.writer}</DataDisc>
+									<DataDesc variant="main-item">{postData.writer}</DataDesc>
 								</Margin>
 							</DataList>
 						</Flex>

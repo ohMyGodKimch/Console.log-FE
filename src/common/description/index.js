@@ -1,3 +1,3 @@
-import { DataList, DataDisc, DataTerm } from "./Description";
+import { DataList, DataDesc, DataTerm } from "./Description";
 
-export { DataList, DataDisc, DataTerm };
+export { DataList, DataDesc, DataTerm };

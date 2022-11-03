@@ -10,6 +10,8 @@ const initialState = {
 	nickname: null,
 	statusMessage: null,
 	statusCode: null,
+	// 로그인 여부 확인 후 변하지 않는 값
+	isInitialized: null,
 	isLogin: null,
 	isCheckedId: false,
 	isCheckedNickname: false,
