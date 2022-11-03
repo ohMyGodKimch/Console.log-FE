@@ -16,9 +16,9 @@ function Edit() {
 	let detail = null;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { data, mainList } = useSelector(state => state.mainlist);
-	const { write } = useSelector(state => state.write);
-	// console.log(mainList);
+	const { mainList } = useSelector(state => state.mainlist);
+	const { write, boardItem } = useSelector(state => state.write);
+	console.log("write =>", write);
 	const { id } = useParams();
 
 	if (mainList && mainList.length > 0) {
@@ -27,12 +27,12 @@ function Edit() {
 		detail = myData;
 		console.log(detail);
 	}
-	console.log(detail);
-	console.log(detail.title);
+	console.log("detail =>", detail);
 
+	// id 변경시마다 값 가져오기 => 새로고침 가능하당!
 	useEffect(() => {
 		dispatch(__getWrite(id));
-	}, [dispatch, id]);
+	}, [dispatch, id, boardItem]);
 
 	useEffect(() => {
 		if (write) setNewList(write.data);
@@ -43,11 +43,16 @@ function Edit() {
 		navigate("/");
 	};
 
+	// 로딩처리
+	if (!write) {
+		return <Box>Loading...</Box>;
+	}
+
 	return (
 		<>
 			<Box variant="user-title-box">
 				<Box>
-					<Text variant="user-header">{detail.title}</Text>
+					<Text variant="user-header">{write?.title}</Text>
 					<Box variant="user-edit-box">
 						<Button variant="user-edit-btn">통계</Button>
 						<Button
@@ -68,20 +73,20 @@ function Edit() {
 					</Box>
 					<Box variant="user-list-navi">
 						<Box variant="user-username">
-							<Box variant="user-username">{detail.writer} ·</Box>
+							<Box variant="user-username">{write?.writer} ·</Box>
 						</Box>
 					</Box>
 				</Box>
-				<Image variant="image-box" src={detail.thumbnail} />
+				<Image variant="image-box" src={write?.thumbnail} />
 				<Box
 					variant="tag-box"
-					dangerouslySetInnerHTML={{ __html: detail.content }}
+					dangerouslySetInnerHTML={{ __html: write?.content }}
 				></Box>
 			</Box>
 			{/* comment part */}
-			<Comment />
+			<Comment write={write} />
 			{/* like part */}
-			<Like boardId={id} />
+			<Like write={write} />
 		</>
 	);
 }

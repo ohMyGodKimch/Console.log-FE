@@ -4,10 +4,11 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_SERVER;
 
 const initialState = {
-	write: [],
+	write: null,
 	isLoding: false,
 	error: null,
 	isLike: null,
+	boardItem: {},
 };
 
 export const __getWrite = createAsyncThunk(
@@ -21,7 +22,7 @@ export const __getWrite = createAsyncThunk(
 					"Content-Type": "application/json",
 				},
 			});
-			return thunkAPI.fulfillWithValue(reponse.data.headers);
+			return thunkAPI.fulfillWithValue(reponse.data.data);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.data);
 		}
@@ -135,7 +136,7 @@ export const __putWrite = createAsyncThunk(
 		}
 	},
 );
-
+// 좋아요 추가
 export const __addLike = createAsyncThunk(
 	"addLike",
 	async (payload, thunkAPI) => {
@@ -162,6 +163,7 @@ export const __addLike = createAsyncThunk(
 	},
 );
 
+// 좋아요 삭제
 export const __cancelLike = createAsyncThunk(
 	"cancelLike",
 	async (payload, thunkAPI) => {
@@ -184,6 +186,38 @@ export const __cancelLike = createAsyncThunk(
 	},
 );
 
+/** 댓글 */
+// 댓글 추가
+export const __addComment = createAsyncThunk(
+	"comment/getComments",
+	async (payload, thunkAPI) => {
+		try {
+			console.log("__addComment payload =>", payload);
+			const board_id = +payload.boardId;
+			const content = payload.content;
+			console.log("board_id =>", board_id, "content =>", content);
+			const token = localStorage.getItem("jwtToken");
+			const response = await axios.post(
+				`${BASE_URL}/${board_id}/comments`,
+				content,
+				{
+					headers: { Authorization: `${token}` },
+				},
+			);
+			console.log("__addComment response =>", response);
+
+			const boardItem = await axios.get(`${BASE_URL}/boards/${board_id}`, {
+				headers: { Authorization: `${token}` },
+			});
+			console.log("boardItem =>", boardItem.data);
+			return thunkAPI.fulfillWithValue(boardItem.data.data);
+		} catch (error) {
+			console.log("__addComment error =>", error);
+			return thunkAPI.fulfillWithValue(error.data);
+		}
+	},
+);
+
 export const writeSlice = createSlice({
 	name: "write",
 	initialState,
@@ -194,6 +228,7 @@ export const writeSlice = createSlice({
 		},
 		[__getWrite.fulfilled]: (state, action) => {
 			state.isLoading = false;
+
 			state.write = action.payload;
 		},
 		[__getWrite.rejected]: state => {
@@ -277,6 +312,20 @@ export const writeSlice = createSlice({
 		},
 		[__cancelLike.rejected]: (state, action) => {
 			console.log("__cancelLike.pending =>", action.payload);
+			state.isLoading = false;
+		},
+		// 댓글 추가
+		[__addComment.pending]: (state, _) => {
+			console.log("__addComment.pending");
+			state.isLoading = true;
+		},
+		[__addComment.fulfilled]: (state, action) => {
+			console.log("__addComment.fulfilled =>", action.payload);
+			state.isLoading = false;
+			state.boardItem = action.payload;
+		},
+		[__addComment.rejected]: (state, action) => {
+			console.log("__addComment.rejected =>", action.payload);
 			state.isLoading = false;
 		},
 	},

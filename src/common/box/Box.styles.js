@@ -338,6 +338,8 @@ export const Box = styled.div`
 				return css`
 					width: 80%;
 				`;
+			case "comment-info-wrap":
+				return css``;
 			default:
 				break;
 		}
