@@ -20,6 +20,16 @@ function Edit() {
 	const { write, boardItem } = useSelector(state => state.write);
 	console.log("write =>", write);
 	// id, boardItem 변경시 실행
+	const { mainList } = useSelector(state => state.mainlist);
+	let detail = null;
+	if (mainList && mainList.length > 0) {
+		const myData = mainList.find(myData => myData.boardId === parseInt(id));
+		// console.log(myData);
+		console.log(myData);
+		detail = myData;
+		// console.log(detail);
+	}
+
 	useEffect(() => {
 		dispatch(__getWrite(id));
 	}, [dispatch, id, boardItem]);
@@ -71,14 +81,14 @@ function Edit() {
 						</Box>
 					</Box>
 				</Box>
-				<Image variant="image-box" src={write.thumbnail} />
+				<Image variant="image-box" src={detail.thumbnail} />
 				<Box
 					variant="tag-box"
 					dangerouslySetInnerHTML={{ __html: write?.content }}
 				></Box>
 				<Box variant="user-info-box">
 					<Box variant="user-detail-box">
-						<Image variant="mypage-image" src={write.thumbnail} />
+						<Image variant="mypage-image" src={detail.thumbnail} />
 						<Box variant="mypage-profile-box">
 							<Box variant="mypage-id-box">{write?.boardId}</Box>
 							<Box variant="mypage-name-box">{write?.writer}</Box>
