@@ -85,10 +85,10 @@ function Edit() {
 
 				<Box variant="user-info-box">
 					<Box variant="user-detail-box">
-						<Image variant="mypage-image" src={detail.thumbnail} />
+						<Image variant="mypage-image" src={write?.thumbnail} />
 						<Box variant="mypage-profile-box">
-							<Box variant="mypage-id-box">{detail.boardId}</Box>
-							<Box variant="mypage-name-box">{detail.writer}</Box>
+							<Box variant="mypage-id-box">{write?.boardId}</Box>
+							<Box variant="mypage-name-box">{write?.writer}</Box>
 						</Box>
 					</Box>
 				</Box>
