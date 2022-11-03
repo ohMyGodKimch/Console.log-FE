@@ -24,7 +24,7 @@ const MainItem = ({ postData }) => {
 			>
 				<Flex height="100%" width="100%" fd="column" jc="space-between">
 					<Box variant="main-item-image">
-						<Image variant="main-item" src="/images/flower.jpg" />
+						<Image variant="main-item" src={postData.thumbnail} />
 
 						<Box variant="main-content">
 							<SecondHeading variant="item-header">
@@ -54,7 +54,7 @@ const MainItem = ({ postData }) => {
 						<Flex height="100%" ai="center">
 							<Image
 								alt="profile"
-								src="/images/flower.jpg"
+								src={postData.thumbnail}
 								variant="main-item-profile"
 							/>
 							<DataList variant="main-item">

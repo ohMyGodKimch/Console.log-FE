@@ -63,7 +63,6 @@ function Write() {
 		const formData = new FormData();
 		formData.append("images", blob);
 		try {
-			console.log(newid);
 			const response = await axios.post(
 				`${BASE_URL}/boards/${newid}/images`,
 				formData,
@@ -75,8 +74,11 @@ function Write() {
 			);
 
 			callback(response.data.data.imageUrl);
+			// setInput(prev => {
+			// 	return { ...prev, images: response.data.data.imageUrl };
+			// });
 			setInput(prev => {
-				return { ...prev, images: blob };
+				return { ...prev, images: [response.data.data.imageUrl] };
 			});
 		} catch (error) {}
 	};

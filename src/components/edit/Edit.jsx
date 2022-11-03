@@ -1,18 +1,22 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { __deleteWrite } from "../../redux/modules/wirte/writeSlice";
+import {
+	__deleteWrite,
+	__getWrite,
+} from "../../redux/modules/wirte/writeSlice";
 import { useEffect, useState } from "react";
-import { Box, Text, Button } from "../../common";
+import { Box, Text, Button, Image } from "../../common";
 import { CommentList } from "../../components/comment";
 import { Like } from "../../components/like";
 
 function Edit() {
-	const [newList, setNewList] = useState([]);
+	const [newList, setNewList] = useState({});
 	// const params = useParams();
 	// console.log(params);
+	let detail = null;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { mainList } = useSelector(state => state.mainlist);
+	const { data, mainList } = useSelector(state => state.mainlist);
 	const { write } = useSelector(state => state.write);
 	// console.log(mainList);
 	const { id } = useParams();
@@ -20,14 +24,15 @@ function Edit() {
 	if (mainList && mainList.length > 0) {
 		const myData = mainList.find(myData => myData.boardId === parseInt(id));
 		console.log(myData);
-		// setMyData(myData);
+		detail = myData;
+		console.log(detail);
 	}
+	console.log(detail);
+	console.log(detail.title);
 
-	// useEffect(() => {
-	// 	dispatch(__getMainList(id));
-	// }, [dispatch, id]);
-	// // console.log(dispatch(__getWrite(id)));
-	// console.log(write);
+	useEffect(() => {
+		dispatch(__getWrite(id));
+	}, [dispatch, id]);
 
 	useEffect(() => {
 		if (write) setNewList(write.data);
@@ -42,7 +47,7 @@ function Edit() {
 		<>
 			<Box variant="user-title-box">
 				<Box>
-					<Text variant="user-header">11</Text>
+					<Text variant="user-header">{detail.title}</Text>
 					<Box variant="user-edit-box">
 						<Button variant="user-edit-btn">통계</Button>
 						<Button
@@ -63,12 +68,15 @@ function Edit() {
 					</Box>
 					<Box variant="user-list-navi">
 						<Box variant="user-username">
-							<Box variant="user-username">username ·</Box>
+							<Box variant="user-username">{detail.writer} ·</Box>
 						</Box>
 					</Box>
 				</Box>
-				<Box variant="image-box">이미지</Box>
-				<Box variant="tag-box">내용</Box>
+				<Image variant="image-box" src={detail.thumbnail} />
+				<Box
+					variant="tag-box"
+					dangerouslySetInnerHTML={{ __html: detail.content }}
+				></Box>
 			</Box>
 			{/* comment part */}
 			<CommentList />

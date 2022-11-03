@@ -311,16 +311,6 @@ export const Box = styled.div`
 					margin-left: 0.5rem;
 					margin-right: 0.5rem;
 				`;
-			case "image-box":
-				return css`
-					max-height: 100vh;
-					max-width: 100%;
-					width: auto;
-					margin: 2rem auto 0px;
-					height: auto;
-					object-fit: contain;
-					display: block;
-				`;
 			case "tag-box":
 				return css`
 					max-width: 768px;

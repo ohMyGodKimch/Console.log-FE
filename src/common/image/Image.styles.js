@@ -53,6 +53,16 @@ export const Image = styled.img`
 					border-radius: 50%;
 					object-fit: cover;
 				`;
+			case "image-box":
+				return css`
+					max-height: 100vh;
+					max-width: 100%;
+					width: auto;
+					margin: 2rem auto 0px;
+					height: auto;
+					object-fit: contain;
+					display: block;
+				`;
 			default:
 				break;
 		}

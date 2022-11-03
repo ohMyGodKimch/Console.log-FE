@@ -10,20 +10,23 @@ const initialState = {
 	isLike: null,
 };
 
-export const __getWrite = createAsyncThunk("getWrite", async (id, thunkAPI) => {
-	try {
-		const jwtToken = localStorage.getItem("jwtToken");
-		const reponse = await axios.get(`${BASE_URL}/boards/${id}`, {
-			headers: {
-				Authorization: jwtToken,
-				"Content-Type": "application/json",
-			},
-		});
-		return thunkAPI.fulfillWithValue(reponse.data.headers);
-	} catch (error) {
-		return thunkAPI.rejectWithValue(error.data);
-	}
-});
+export const __getWrite = createAsyncThunk(
+	"getWrite",
+	async (boardId, thunkAPI) => {
+		try {
+			const jwtToken = localStorage.getItem("jwtToken");
+			const reponse = await axios.get(`${BASE_URL}/boards/${boardId}`, {
+				headers: {
+					Authorization: jwtToken,
+					"Content-Type": "application/json",
+				},
+			});
+			return thunkAPI.fulfillWithValue(reponse.data.headers);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.data);
+		}
+	},
+);
 
 export const __postWrite = createAsyncThunk(
 	"postWrite",
