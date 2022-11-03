@@ -31,7 +31,7 @@ export const DataTerm = styled.dt`
 	}}
 `;
 
-export const DataDisc = styled.dd`
+export const DataDesc = styled.dd`
 	${({ variant }) => {
 		switch (variant) {
 			case "main-item":

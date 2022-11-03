@@ -39,7 +39,13 @@ export const SecondHeading = styled.h2`
 					white-space: nowrap;
 					overflow: hidden;
 				`;
-
+			case "comment-header":
+				return css`
+					font-size: 1.125rem;
+					line-height: 1.5;
+					font-weight: 600;
+					margin-bottom: 1rem;
+				`;
 			default:
 				break;
 		}

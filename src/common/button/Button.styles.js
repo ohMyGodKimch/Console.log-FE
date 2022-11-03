@@ -115,7 +115,6 @@ export const Button = styled.button`
 				return css`
 					height: 2.5rem;
 					padding: 0.5rem 1rem;
-					-webkit-box-align: center;
 					align-items: center;
 					background: none;
 					border-radius: 4px;
@@ -138,16 +137,12 @@ export const Button = styled.button`
 					height: 2.5rem;
 					font-size: 1.125rem;
 					display: inline-flex;
-					-webkit-box-align: center;
 					align-items: center;
-					-webkit-box-pack: center;
 					justify-content: center;
 					font-weight: bold;
 					cursor: pointer;
 					outline: none;
 					border: none;
-					background: var(--primary1);
-					color: var(--button-text);
 					border-radius: 4px;
 					padding: 0px 1.25rem;
 					appearance: auto;
@@ -174,6 +169,46 @@ export const Button = styled.button`
 					font-weight: 400;
 					background-color: rgb(0, 0, 0, 0);
 					background-origin: padding-box;
+				`;
+			case "un-like":
+				return css`
+					width: 25px;
+					height: 25px;
+					background-image: url("/images/heart.png");
+					background-position: center center;
+					background-size: contain;
+					background-color: transparent;
+					opacity: 0.6;
+					&:hover {
+						opacity: 0.6;
+					}
+				`;
+			case "like":
+				return css`
+					width: 25px;
+					height: 25px;
+					background-image: url("/images/like.png");
+					background-position: center center;
+					background-size: contain;
+					background-color: transparent;
+					opacity: 0.6;
+					&:hover {
+						opacity: 0.6;
+					}
+				`;
+			case "comment":
+				return css`
+					width: 100px;
+					font-weight: 500;
+					outline: none;
+					border: none;
+					background: #12b886;
+					color: #ffffff;
+					border-radius: 4px;
+					padding: 0px 10px;
+					height: 2rem;
+					font-size: 15px;
+					cursor: pointer;
 				`;
 			default:
 				break;

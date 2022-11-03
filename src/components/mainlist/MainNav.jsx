@@ -29,6 +29,8 @@ const MainNav = () => {
 			setIsSignUpClick(false);
 		}
 	}, [dispatch, isLoading, signUpStatusCode]);
+	// 로그인 유무에 따른 token state 관리
+	if (!localStorage.getItem("jwtToken")) dispatch(resetToken());
 
 	return (
 		<>
@@ -47,7 +49,7 @@ const MainNav = () => {
 							<Flex jc="flex-end">
 								<Box>
 									<Flex gap="20px" height="100%" ai="center">
-										{token ? (
+										{token || localStorage.getItem("jwtToken") ? (
 											<>
 												<Button
 													variant="new-post"

@@ -11,7 +11,7 @@ import {
 	Image,
 	Margin,
 	DataList,
-	DataDisc,
+	DataDesc,
 	DataTerm,
 	Button,
 } from "../../common";

@@ -6,7 +6,7 @@ import {
 	Image,
 	Margin,
 	DataList,
-	DataDisc,
+	DataDesc,
 	DataTerm,
 } from "../../common";
 import { __getMypage } from "../../redux/modules/mypage/mypageSlice";
@@ -59,7 +59,7 @@ const MypageCard = ({ borderId }) => {
 													<DataTerm variant="main-item">by</DataTerm>
 												</Margin>
 												<Margin display="inline-block" margin="0 0 0 5px">
-													<DataDisc variant="main-item">지영</DataDisc>
+													<DataDesc variant="main-item">지영</DataDesc>
 												</Margin>
 											</DataList>
 										</Flex>

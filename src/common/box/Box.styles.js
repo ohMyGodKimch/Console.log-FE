@@ -247,6 +247,44 @@ export const Box = styled.div`
 					font-size: 0.75rem;
 					color: #8f969d;
 				`;
+			case "button-wrap":
+				return css`
+					width: 45px;
+					height: 45px;
+					border: 2px solid #e1e4e8;
+					border-radius: 50%;
+					transition: transform 200ms ease-in-out;
+					&:hover {
+						transform: scale(1.1);
+					}
+				`;
+			case "like-wrap":
+				return css`
+					background-color: #eeeeee;
+					width: 62px;
+					height: 148px;
+					border: 2px solid #f1f3f5;
+					border-radius: 50px;
+				`;
+			case "comment-wrap":
+				return css`
+					width: 768px;
+					background-color: #d5d5d5;
+				`;
+			case "comment-input-wrap":
+				return css`
+					width: 768px;
+					background-color: #d5d5d5;
+				`;
+			case "comment-list-wraper":
+				return css`
+					margin-top: 2.5rem;
+					width: 768px;
+				`;
+			case "comment-item-wrap":
+				return css`
+					padding: 24px 0;
+				`;
 			case "user-name-box":
 				return css`
 					-webkit-box-align: center;

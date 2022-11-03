@@ -44,6 +44,10 @@ export const Text = styled.p`
 					margin-bottom: 2rem;
 					word-break: keep-all;
 				`;
+			case "like":
+				return css`
+					color: #7b8289;
+				`;
 
 			default:
 				break;
