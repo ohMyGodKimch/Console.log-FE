@@ -339,8 +339,12 @@ export const Box = styled.div`
 				return css`
 					width: 80%;
 				`;
-			case "comment-info-wrap":
-				return css``;
+			case "detail-like":
+				return css`
+					position: fixed;
+					top: 350px;
+					left: 15px;
+				`;
 			default:
 				break;
 		}

@@ -31,7 +31,7 @@ export const __addBoardItem = createAsyncThunk(
 	},
 );
 
-// 무한스크롤로 리스트 받아오기
+// 무한스크롤 리스트
 export const __getNextList = createAsyncThunk(
 	"getNextTodo",
 	async (payload, thunkAPI) => {
@@ -72,7 +72,7 @@ export const mainlistSlice = createSlice({
 			// console.log("__addBoardItem rejected  payload => ", action.payload);
 			state.isLoading = false;
 		},
-		// 무한스크롤 리스트 가져오기
+		// 무한스크롤 리스트
 		[__getNextList.pending]: (state, action) => {
 			console.log("__getNextTodo pending");
 			state.isLoading = true;

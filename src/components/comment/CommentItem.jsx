@@ -9,8 +9,25 @@ import {
 	Hidden,
 	Button,
 } from "../../common";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+	__deleteComment,
+	__editComment,
+} from "../../redux/modules/wirte/writeSlice";
 
-const CommentItem = ({ item }) => {
+const CommentItem = ({ item, boardId }) => {
+	// Redux dispacher
+	const dispatch = useDispatch();
+	// 수정을 누른 댓글 id state
+	const [editId, setEditId] = useState(null);
+	// 수정 input 출력 여부 staet
+	const [edit, setEdit] = useState(false);
+	// 댓글 수정 값 state
+	const [editValue, setEditValue] = useState({
+		content: "",
+	});
+
 	return (
 		<Box variant="comment-item-wrap">
 			<Box variant="comment-header">
@@ -36,8 +53,22 @@ const CommentItem = ({ item }) => {
 							</DataList>
 						</Flex>
 						<Box variant="comment-edit-wrap">
-							<Button variant="comment-edit">수정</Button>
-							<Button variant="comment-edit">삭제</Button>
+							<Button
+								variant="comment-edit"
+								onClick={() => dispatch(__editComment())}
+							>
+								수정
+							</Button>
+							<Button
+								variant="comment-edit"
+								onClick={() =>
+									dispatch(
+										__deleteComment({ commentId: item.commentId, boardId }),
+									)
+								}
+							>
+								삭제
+							</Button>
 						</Box>
 					</Box>
 				</Flex>

@@ -3,13 +3,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { __addLike, __cancelLike } from "../../redux/modules/wirte/writeSlice";
 
-const Like = ({ boardId }) => {
+const Like = ({ boardId, heartCount }) => {
+	// Redux dispacher
 	const dispatch = useDispatch();
+	// 아이콘 변경 state
 	const [action, setAction] = useState(false);
-	const [likeCount, setLikeCount] = useState(0);
 
 	return (
-		<Box>
+		<Box variant="detail-like">
 			<Box variant="like-wrap">
 				{action ? (
 					<Flex
@@ -32,7 +33,7 @@ const Like = ({ boardId }) => {
 								></Button>
 							</Flex>
 						</Box>
-						<Text variant="like">{likeCount}</Text>
+						<Text variant="like">{heartCount}</Text>
 					</Flex>
 				) : (
 					<Flex
@@ -55,7 +56,7 @@ const Like = ({ boardId }) => {
 								></Button>
 							</Flex>
 						</Box>
-						<Text variant="like">{likeCount}</Text>
+						<Text variant="like">{heartCount}</Text>
 					</Flex>
 				)}
 			</Box>

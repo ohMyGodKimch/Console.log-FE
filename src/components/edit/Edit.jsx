@@ -4,40 +4,26 @@ import {
 	__deleteWrite,
 	__getWrite,
 } from "../../redux/modules/wirte/writeSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, Text, Button, Image } from "../../common";
 import { Comment } from "../../components/comment";
 import { Like } from "../../components/like";
 
 function Edit() {
-	const [newList, setNewList] = useState({});
-	// const params = useParams();
-	// console.log(params);
-	let detail = null;
+	// Redux dispacher
 	const dispatch = useDispatch();
+	// React Router
 	const navigate = useNavigate();
-	const { mainList } = useSelector(state => state.mainlist);
+	// 디테일 페이지 파라미터
+	const { id } = useParams();
+	// 디테일 페이지 게시물 정보
 	const { write, boardItem } = useSelector(state => state.write);
 	console.log("write =>", write);
-	const { id } = useParams();
-	console.log(id);
-	if (mainList && mainList.length > 0) {
-		const myData = mainList.find(myData => myData.boardId === parseInt(id));
-		// console.log(myData);
-		detail = myData;
-		// console.log(detail);
-	}
-	console.log("detail =>", detail);
-
-	// id 변경시마다 값 가져오기 => 새로고침 가능하당!
+	// id, boardItem 변경시 실행
 	useEffect(() => {
 		dispatch(__getWrite(id));
 	}, [dispatch, id, boardItem]);
-
-	useEffect(() => {
-		if (write) setNewList(write.data);
-	}, [write]);
-
+	// 게시글 삭제
 	const onDeleteBtn = () => {
 		dispatch(__deleteWrite(id));
 		navigate("/");
@@ -96,7 +82,7 @@ function Edit() {
 			{/* comment part */}
 			<Comment write={write} />
 			{/* like part */}
-			<Like write={write} />
+			<Like boardId={id} heartCount={write.heartCount} />
 		</>
 	);
 }
