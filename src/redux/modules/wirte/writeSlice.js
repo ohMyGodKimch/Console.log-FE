@@ -1,26 +1,38 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 
 const BASE_URL = process.env.REACT_APP_SERVER;
-//localhost:8080/
-// http://13.125.106.163:8080/
 
-// axios.defaults.headers.post["Authorization"] = "X-AUTH_TOKEN";
+export const __getWrite = createAsyncThunk("getWrite", async (id, thunkAPI) => {
+	try {
+		const jwtToken = localStorage.getItem("jwtToken");
+		const reponse = await axios.get(`${BASE_URL}/boards/${id}`, {
+			headers: {
+				Authorization: jwtToken,
+				"Content-Type": "application/json",
+			},
+		});
+		return thunkAPI.fulfillWithValue(reponse.data.headers);
+	} catch (error) {
+		return thunkAPI.rejectWithValue(error.data);
+	}
+});
 
 export const __postWrite = createAsyncThunk(
 	"postWrite",
 	async (payload, thunkAPI) => {
 		try {
 			const jwtToken = localStorage.getItem("jwtToken");
-			const reponse = await axios.post(`${BASE_URL}/boards/write`, payload, {
+			const { data } = await axios.post(`${BASE_URL}/boards/write`, payload, {
 				headers: {
 					Authorization: jwtToken,
 					"Content-Type": "application/json",
 				},
 			});
-
-			return thunkAPI.fulfillWithValue(reponse.data.headers);
+			return thunkAPI.fulfillWithValue({
+				boardId: data.data.boardId,
+				data: data.data,
+			});
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.data);
 		}
@@ -106,6 +118,16 @@ export const writeSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: {
+		[__getWrite.pending]: state => {
+			state.isLoading = true;
+		},
+		[__getWrite.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.write = action.payload;
+		},
+		[__getWrite.rejected]: state => {
+			state.isLoading = false;
+		},
 		[__postWrite.pending]: state => {
 			state.isLoading = true;
 		},
@@ -131,7 +153,7 @@ export const writeSlice = createSlice({
 		},
 		[__deleteWrite.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.write = action.payload;
+			state.write.filter(state => state.id !== action.payload);
 		},
 		[__deleteWrite.rejected]: state => {
 			state.isLoading = false;
@@ -141,7 +163,7 @@ export const writeSlice = createSlice({
 		},
 		[__putWrite.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.write = action.payload;
+			state.write.push = action.payload;
 		},
 		[__putWrite.rejected]: state => {
 			state.isLoading = false;

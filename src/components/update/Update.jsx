@@ -47,14 +47,9 @@ function Update() {
 		e.preventDefault();
 
 		const editorInstance = editorRef.current.getInstance();
-		// const getContent_md = editorInstance.getMarkdown();
-		// const content = getContent_md;
 
-		// TODO
 		const getContent_html = editorInstance.getHTML();
 		const content = getContent_html;
-		// const content = getContent_html;
-		// console.log(content);
 
 		setInput(prev => {
 			return { ...prev, content: content };
@@ -62,27 +57,7 @@ function Update() {
 		setIsSubmit(true);
 	};
 
-	// const uploadImage = async (blob, callback) => {
-	// 	const formData = new FormData();
-	// 	formData.append("images", blob);
-
-	// 	// 1. 첨부된 이미지 파일을 서버로 전송후, 이미지 경로 url을 받아온다.
-	// 	const url = await axios.post(`${BASE_URL}/boards/${1}/images`, {
-	// 		header: { "content-type": "multipart/formdata" },
-	// 		body: {
-	// 			formData,
-	// 		},
-	// 	});
-	// 	console.log(url);
-	// 	// 2. 첨부된 이미지를 화면에 표시
-	// 	if (url) {
-	// 		callback(url, "images");
-	// 		images.push(blob);
-	// 	}
-
-	// 	console.log(blob);
-	// };
-
+	const BASE_URL = process.env.REACT_APP_SERVER;
 	const uploadImage = async (blob, callback) => {
 		console.log("blob =>", blob);
 		const formData = new FormData();
@@ -105,10 +80,8 @@ function Update() {
 		if (isSubmit) {
 			dispatch(__putWrite(input));
 			setIsSubmit(false);
-			navigate("/");
 		}
 	}, [dispatch, navigate, input, isSubmit, id]);
-	const BASE_URL = process.env.REACT_APP_SERVER;
 
 	return (
 		<>

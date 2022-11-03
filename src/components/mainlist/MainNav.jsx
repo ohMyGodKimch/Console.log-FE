@@ -52,7 +52,8 @@ const MainNav = () => {
 												<Button
 													variant="new-post"
 													onClick={() => {
-														dispatch(__postWrite());
+														const test = dispatch(__postWrite());
+														console.log(test);
 														navigate(`/boards/`);
 													}}
 												>

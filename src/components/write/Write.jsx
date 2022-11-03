@@ -28,7 +28,10 @@ function Write() {
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { write } = useSelector(state => state.write);
+	const write = useSelector(state => state.mainlist);
+	console.log(write);
+	console.log(write.mainList);
+	console.log(write.mainList[3].title);
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [input, setInput] = useState({
 		title: "",
