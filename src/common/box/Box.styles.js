@@ -252,6 +252,7 @@ export const Box = styled.div`
 					width: 45px;
 					height: 45px;
 					border: 2px solid #e1e4e8;
+					background-color: #ffffff;
 					border-radius: 50%;
 					transition: transform 200ms ease-in-out;
 					&:hover {
@@ -260,7 +261,7 @@ export const Box = styled.div`
 				`;
 			case "like-wrap":
 				return css`
-					background-color: #eeeeee;
+					background-color: #f8f9fa;
 					width: 62px;
 					height: 148px;
 					border: 2px solid #f1f3f5;
@@ -269,12 +270,14 @@ export const Box = styled.div`
 			case "comment-wrap":
 				return css`
 					width: 768px;
-					background-color: #d5d5d5;
+					margin-top: 3rem;
+					margin-left: auto;
+					margin-right: auto;
+					border-bottom: 1px solid #f1f3f5;
 				`;
 			case "comment-input-wrap":
 				return css`
 					width: 768px;
-					background-color: #d5d5d5;
 				`;
 			case "comment-list-wraper":
 				return css`
@@ -327,6 +330,23 @@ export const Box = styled.div`
 					letter-spacing: -0.004em;
 					word-break: keep-all;
 					overflow-wrap: break-word;
+				`;
+			case "comment-header":
+				return css`
+					margin-bottom: 1.5rem;
+				`;
+			case "comment-content":
+				return css`
+					font-size: 1.1rem;
+					line-height: 1.7;
+					letter-spacing: -0.004em;
+					word-break: keep-all;
+					overflow-wrap: break-word;
+					margin: 18px 0;
+				`;
+			case "edit-wrap":
+				return css`
+					width: 80%;
 				`;
 			default:
 				break;

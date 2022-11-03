@@ -1,17 +1,19 @@
 import Edit from "../../components/edit/Edit";
 import * as styles from "./EditPageLayout.styles";
-import { Flex } from "../../common";
+import { Flex, Box } from "../../common";
 import { MainNav } from "../../components/mainlist";
 
 function EditPage() {
 	return (
 		<>
-			<Flex width="100%" height="100vh" jc="center">
-				<styles.EditPageLayout>
-					<MainNav />
-					<Edit />
-				</styles.EditPageLayout>
-			</Flex>
+			<styles.EditPageLayout>
+				<Flex width="100%" height="100vh" jc="center">
+					<Box variant="edit-wrap">
+						<MainNav />
+						<Edit />
+					</Box>
+				</Flex>
+			</styles.EditPageLayout>
 		</>
 	);
 }

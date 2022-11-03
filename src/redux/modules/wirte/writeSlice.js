@@ -3,6 +3,13 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_SERVER;
 
+const initialState = {
+	write: [],
+	isLoding: false,
+	error: null,
+	isLike: null,
+};
+
 export const __getWrite = createAsyncThunk("getWrite", async (id, thunkAPI) => {
 	try {
 		const jwtToken = localStorage.getItem("jwtToken");
@@ -110,8 +117,19 @@ export const __addLike = createAsyncThunk(
 	"addLike",
 	async (payload, thunkAPI) => {
 		try {
+			console.log("__addLike payload =>", payload);
 			const board_id = payload;
-			const response = await axios.post(`${BASE_URL}/heart/${board_id}`);
+			const jwtToken = localStorage.getItem("jwtToken");
+			const response = await axios.post(
+				`${BASE_URL}/heart/${board_id}`,
+				board_id,
+				{
+					headers: {
+						Authorization: jwtToken,
+						"Content-Type": "application/json",
+					},
+				},
+			);
 			console.log("response =>", response);
 			return thunkAPI.fulfillWithValue(board_id);
 		} catch (error) {
@@ -121,17 +139,19 @@ export const __addLike = createAsyncThunk(
 	},
 );
 
-const initialState = {
-	write: [],
-	isLoding: false,
-	error: null,
-};
 export const __cancelLike = createAsyncThunk(
 	"cancelLike",
 	async (payload, thunkAPI) => {
 		try {
+			console.log("__deleteLike payload =>", payload);
 			const board_id = payload;
-			const response = await axios.delete(`${BASE_URL}/write/${board_id}`);
+			const jwtToken = localStorage.getItem("jwtToken");
+			const response = await axios.delete(`${BASE_URL}/heart/${board_id}`, {
+				headers: {
+					Authorization: jwtToken,
+					"Content-Type": "application/json",
+				},
+			});
 			console.log("response =>", response);
 			return thunkAPI.fulfillWithValue(board_id);
 		} catch (error) {
@@ -203,6 +223,7 @@ export const writeSlice = createSlice({
 			console.log("__addLike.fulfilled =>", action.payload);
 			state.isLoading = false;
 			// 리스트에서 board_id에 해당하는 게시글의 좋아요를 1 해주기
+			state.isLike = true;
 		},
 		[__addLike.rejected]: (state, action) => {
 			console.log("__addLike.rejected =>", action.payload);
@@ -217,6 +238,7 @@ export const writeSlice = createSlice({
 			console.log("__cancelLike.fulfilled =>", action.payload);
 			state.isLoading = false;
 			// 리스트에서 board_id에 해당하는 게시글의 좋아요를 -1 해주기
+			state.isLike = false;
 		},
 		[__cancelLike.rejected]: (state, action) => {
 			console.log("__cancelLike.pending =>", action.payload);

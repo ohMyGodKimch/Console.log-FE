@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { __addLike, __cancelLike } from "../../redux/modules/wirte/writeSlice";
 
-const Like = () => {
+const Like = ({ boardId }) => {
 	const dispatch = useDispatch();
 	const [action, setAction] = useState(false);
 	const [likeCount, setLikeCount] = useState(0);
@@ -27,7 +27,7 @@ const Like = () => {
 									variant="like"
 									onClick={() => {
 										setAction(prev => !prev);
-										dispatch(__cancelLike());
+										dispatch(__cancelLike(boardId));
 									}}
 								></Button>
 							</Flex>
@@ -50,7 +50,7 @@ const Like = () => {
 									variant="un-like"
 									onClick={() => {
 										setAction(prev => !prev);
-										dispatch(__addLike());
+										dispatch(__addLike(boardId));
 									}}
 								></Button>
 							</Flex>

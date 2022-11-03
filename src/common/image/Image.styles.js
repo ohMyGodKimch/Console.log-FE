@@ -44,6 +44,15 @@ export const Image = styled.img`
 					object-fit: cover;
 					box-shadow: rgb(0 0 0 / 6%) 0px 0px 4px 0px;
 				`;
+			case "profile":
+				return css`
+					border-radius: 50%;
+					width: 3.375rem;
+					height: 3.375rem;
+					display: block;
+					border-radius: 50%;
+					object-fit: cover;
+				`;
 			default:
 				break;
 		}
