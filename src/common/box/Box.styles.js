@@ -316,7 +316,7 @@ export const Box = styled.div`
 					margin-top: 5rem;
 					max-width: 768px;
 					font-size: 1.125rem;
-					transition: color 0.125s;
+					transition: color;
 					line-height: 1.7;
 					letter-spacing: -0.004em;
 					word-break: keep-all;
