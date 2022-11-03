@@ -10,7 +10,7 @@ const Comment = ({ write }) => {
 	// 댓글 본문 값을 저장하는 state
 	const [commentValue, setCommentValue] = useState("");
 	// 상세페이지에서 댓글 목록 추출
-	const { commentList } = write;
+	const { commentList, boardId } = write;
 
 	if (!write) {
 		return <div>로딩중</div>;
@@ -51,7 +51,9 @@ const Comment = ({ write }) => {
 				<Box variant="comment-list">
 					{/* 댓글 리스트 반복문 */}
 					{commentList?.map(item => {
-						return <CommentItem key={item.commentId} item={item} />;
+						return (
+							<CommentItem key={item.commentId} item={item} boardId={boardId} />
+						);
 					})}
 				</Box>
 			</Box>

@@ -6,9 +6,8 @@ const BASE_URL = process.env.REACT_APP_SERVER;
 const initialState = {
 	write: null,
 	isLoding: false,
-	error: null,
-	isLike: null,
 	boardItem: {},
+	isCommentChage: null,
 };
 
 export const __getWrite = createAsyncThunk(
@@ -142,20 +141,16 @@ export const __addLike = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			console.log("__addLike payload =>", payload);
-			const board_id = payload;
-			const jwtToken = localStorage.getItem("jwtToken");
-			const response = await axios.post(
-				`${BASE_URL}/heart/${board_id}`,
-				board_id,
-				{
-					headers: {
-						Authorization: jwtToken,
-						"Content-Type": "application/json",
-					},
-				},
-			);
-			console.log("response =>", response);
-			return thunkAPI.fulfillWithValue(board_id);
+			const board_id = +payload;
+			const token = localStorage.getItem("jwtToken");
+			await axios.post(`${BASE_URL}/heart/${board_id}`, board_id, {
+				headers: { Authorization: `${token}` },
+			});
+			const boardItem = await axios.get(`${BASE_URL}/boards/${board_id}`, {
+				headers: { Authorization: `${token}` },
+			});
+			console.log("boardItem =>", boardItem.data);
+			return thunkAPI.fulfillWithValue(boardItem.data.data);
 		} catch (error) {
 			console.log("error => ", error);
 			return thunkAPI.rejectWithValue(error.data);
@@ -169,16 +164,16 @@ export const __cancelLike = createAsyncThunk(
 	async (payload, thunkAPI) => {
 		try {
 			console.log("__deleteLike payload =>", payload);
-			const board_id = payload;
-			const jwtToken = localStorage.getItem("jwtToken");
-			const response = await axios.delete(`${BASE_URL}/heart/${board_id}`, {
-				headers: {
-					Authorization: jwtToken,
-					"Content-Type": "application/json",
-				},
+			const board_id = +payload;
+			const token = localStorage.getItem("jwtToken");
+			await axios.delete(`${BASE_URL}/heart/${board_id}`, {
+				headers: { Authorization: `${token}` },
 			});
-			console.log("response =>", response);
-			return thunkAPI.fulfillWithValue(board_id);
+			const boardItem = await axios.get(`${BASE_URL}/boards/${board_id}`, {
+				headers: { Authorization: `${token}` },
+			});
+			console.log("boardItem =>", boardItem.data);
+			return thunkAPI.fulfillWithValue(boardItem.data.data);
 		} catch (error) {
 			console.log("error => ", error);
 			return thunkAPI.rejectWithValue(error.data);
@@ -197,15 +192,9 @@ export const __addComment = createAsyncThunk(
 			const content = payload.content;
 			console.log("board_id =>", board_id, "content =>", content);
 			const token = localStorage.getItem("jwtToken");
-			const response = await axios.post(
-				`${BASE_URL}/${board_id}/comments`,
-				content,
-				{
-					headers: { Authorization: `${token}` },
-				},
-			);
-			console.log("__addComment response =>", response);
-
+			await axios.post(`${BASE_URL}/${board_id}/comments`, content, {
+				headers: { Authorization: `${token}` },
+			});
 			const boardItem = await axios.get(`${BASE_URL}/boards/${board_id}`, {
 				headers: { Authorization: `${token}` },
 			});
@@ -213,6 +202,55 @@ export const __addComment = createAsyncThunk(
 			return thunkAPI.fulfillWithValue(boardItem.data.data);
 		} catch (error) {
 			console.log("__addComment error =>", error);
+			return thunkAPI.fulfillWithValue(error.data);
+		}
+	},
+);
+
+// 댓글 삭제
+export const __deleteComment = createAsyncThunk(
+	"comment/DeleteComment",
+	async (payload, thunkAPI) => {
+		try {
+			const comment_id = +payload.commentId;
+			const board_id = +payload.boardId;
+			console.log("__DeleteComment payload =>", payload);
+			const token = localStorage.getItem("jwtToken");
+			await axios.delete(`${BASE_URL}/comments/${comment_id}`, {
+				headers: { Authorization: `${token}` },
+			});
+			const boardItem = await axios.get(`${BASE_URL}/boards/${board_id}`, {
+				headers: { Authorization: `${token}` },
+			});
+			console.log("boardItem =>", boardItem.data);
+			return thunkAPI.fulfillWithValue(boardItem.data.data);
+		} catch (error) {
+			console.log("__DeleteComment error =>", error);
+			return thunkAPI.fulfillWithValue(error.data);
+		}
+	},
+);
+
+// 댓글 수정
+export const __editComment = createAsyncThunk(
+	"comment/editComment",
+	async (payload, thunkAPI) => {
+		try {
+			const comment_id = +payload.commentId;
+			const board_id = +payload.boardId;
+			const content = payload.content;
+			console.log("__DeleteComment payload =>", payload);
+			const token = localStorage.getItem("jwtToken");
+			await axios.put(`${BASE_URL}/comments/${comment_id}`, content, {
+				headers: { Authorization: `${token}` },
+			});
+			const boardItem = await axios.get(`${BASE_URL}/boards/${board_id}`, {
+				headers: { Authorization: `${token}` },
+			});
+			console.log("boardItem =>", boardItem.data);
+			return thunkAPI.fulfillWithValue(boardItem.data.data);
+		} catch (error) {
+			console.log("__DeleteComment error =>", error);
 			return thunkAPI.fulfillWithValue(error.data);
 		}
 	},
@@ -284,7 +322,7 @@ export const writeSlice = createSlice({
 		[__upDeleteWrite.rejected]: state => {
 			state.isLoading = false;
 		},
-		// 좋아요
+		// 게시글 좋아요
 		[__addLike.pending]: state => {
 			console.log("__addLike.pending");
 			state.isLoading = true;
@@ -292,14 +330,13 @@ export const writeSlice = createSlice({
 		[__addLike.fulfilled]: (state, action) => {
 			console.log("__addLike.fulfilled =>", action.payload);
 			state.isLoading = false;
-			// 리스트에서 board_id에 해당하는 게시글의 좋아요를 1 해주기
-			state.isLike = true;
+			state.boardItem = action.payload;
 		},
 		[__addLike.rejected]: (state, action) => {
 			console.log("__addLike.rejected =>", action.payload);
 			state.isLoading = false;
 		},
-		// 좋아요 취소
+		// 게시글 좋아요 취소
 		[__cancelLike.pending]: state => {
 			console.log("__cancelLike.pending");
 			state.isLoading = true;
@@ -307,8 +344,7 @@ export const writeSlice = createSlice({
 		[__cancelLike.fulfilled]: (state, action) => {
 			console.log("__cancelLike.fulfilled =>", action.payload);
 			state.isLoading = false;
-			// 리스트에서 board_id에 해당하는 게시글의 좋아요를 -1 해주기
-			state.isLike = false;
+			state.boardItem = action.payload;
 		},
 		[__cancelLike.rejected]: (state, action) => {
 			console.log("__cancelLike.pending =>", action.payload);
@@ -326,6 +362,34 @@ export const writeSlice = createSlice({
 		},
 		[__addComment.rejected]: (state, action) => {
 			console.log("__addComment.rejected =>", action.payload);
+			state.isLoading = false;
+		},
+		// 댓글 삭제
+		[__deleteComment.pending]: (state, _) => {
+			console.log("__deleteComment.pending");
+			state.isLoading = true;
+		},
+		[__deleteComment.fulfilled]: (state, action) => {
+			console.log("__deleteComment.fulfilled =>", action.payload);
+			state.isLoading = false;
+			state.boardItem = action.payload;
+		},
+		[__deleteComment.rejected]: (state, action) => {
+			console.log("__deleteComment.rejected =>", action.payload);
+			state.isLoading = false;
+		},
+		// 댓글 수정
+		[__editComment.pending]: (state, _) => {
+			console.log("__editComment.pending");
+			state.isLoading = true;
+		},
+		[__editComment.fulfilled]: (state, action) => {
+			console.log("__editComment.fulfilled =>", action.payload);
+			state.isLoading = false;
+			state.boardItem = action.payload;
+		},
+		[__editComment.rejected]: (state, action) => {
+			console.log("__editComment.rejected =>", action.payload);
 			state.isLoading = false;
 		},
 	},

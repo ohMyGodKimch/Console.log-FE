@@ -4,44 +4,26 @@ import {
 	__deleteWrite,
 	__getWrite,
 } from "../../redux/modules/wirte/writeSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, Text, Button, Image } from "../../common";
 import { Comment } from "../../components/comment";
 import { Like } from "../../components/like";
 
 function Edit() {
-	const [newList, setNewList] = useState({});
-	const [check, setCheck] = useState(false);
-
-	// const params = useParams();
-	// console.log(params);
-	let detail = null;
+	// Redux dispacher
 	const dispatch = useDispatch();
+	// React Router
 	const navigate = useNavigate();
-	const { mainList } = useSelector(state => state.mainlist);
-	const { write, boardItem } = useSelector(state => state.write);
-	// console.log("write =>", write);
+	// 디테일 페이지 파라미터
 	const { id } = useParams();
-	// console.log(write);
-	// console.log(write.writer);
-	// console.log(id);
-	if (mainList && mainList.length > 0) {
-		const myData = mainList.find(myData => myData.boardId === parseInt(id));
-		console.log(myData);
-		detail = myData;
-		// console.log(detail);
-	}
-	// console.log("detail =>", detail);
-
-	// id 변경시마다 값 가져오기 => 새로고침 가능하당!
+	// 디테일 페이지 게시물 정보
+	const { write, boardItem } = useSelector(state => state.write);
+	console.log("write =>", write);
+	// id, boardItem 변경시 실행
 	useEffect(() => {
 		dispatch(__getWrite(id));
 	}, [dispatch, id, boardItem]);
-
-	useEffect(() => {
-		if (write) setNewList(write.data);
-	}, [write]);
-
+	// 게시글 삭제
 	const onDeleteBtn = () => {
 		dispatch(__deleteWrite(id));
 		navigate("/");
@@ -89,14 +71,14 @@ function Edit() {
 						</Box>
 					</Box>
 				</Box>
-				<Image variant="image-box" src={detail.thumbnail} />
+				<Image variant="image-box" src={write.thumbnail} />
 				<Box
 					variant="tag-box"
 					dangerouslySetInnerHTML={{ __html: write?.content }}
 				></Box>
 				<Box variant="user-info-box">
 					<Box variant="user-detail-box">
-						<Image variant="mypage-image" src={detail.thumbnail} />
+						<Image variant="mypage-image" src={write.thumbnail} />
 						<Box variant="mypage-profile-box">
 							<Box variant="mypage-id-box">{write?.boardId}</Box>
 							<Box variant="mypage-name-box">{write?.writer}</Box>
@@ -107,7 +89,7 @@ function Edit() {
 			{/* comment part */}
 			<Comment write={write} />
 			{/* like part */}
-			<Like write={write} />
+			<Like boardId={id} heartCount={write.heartCount} />
 		</>
 	);
 }
