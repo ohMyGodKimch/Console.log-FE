@@ -36,6 +36,7 @@ function Edit() {
 	// 게시글 삭제
 	const onDeleteBtn = () => {
 		dispatch(__deleteWrite(id));
+
 		navigate("/");
 	};
 
@@ -50,28 +51,24 @@ function Edit() {
 				<Box>
 					<Text variant="user-header">{write?.title}</Text>
 
-					{write.writer == write.writer ? (
-						<Box variant="user-edit-box">
-							<Button variant="user-edit-btn">통계</Button>
-							<Button
-								variant="user-edit-btn1"
-								onClick={() => {
-									navigate(`/update/${id}`);
-								}}
-							>
-								수정
-							</Button>
-							<Button
-								type="button"
-								variant="user-edit-btn1"
-								onClick={onDeleteBtn}
-							>
-								삭제
-							</Button>
-						</Box>
-					) : (
-						""
-					)}
+					<Box variant="user-edit-box">
+						<Button variant="user-edit-btn">통계</Button>
+						<Button
+							variant="user-edit-btn1"
+							onClick={() => {
+								navigate(`/update/${id}`);
+							}}
+						>
+							수정
+						</Button>
+						<Button
+							type="button"
+							variant="user-edit-btn1"
+							onClick={onDeleteBtn}
+						>
+							삭제
+						</Button>
+					</Box>
 
 					<Box variant="user-list-navi">
 						<Box variant="user-username">

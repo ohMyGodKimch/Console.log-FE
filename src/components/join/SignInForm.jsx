@@ -115,6 +115,7 @@ const SignInForm = ({
 
 												<Margin margin="30px 0 10px 0">
 													<Input
+														type="password"
 														variant="join"
 														placeholder="비밀번호를 입력해주세요."
 														{...register("password", { required: true })}
