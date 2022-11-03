@@ -345,6 +345,17 @@ export const Box = styled.div`
 					top: 350px;
 					left: 15px;
 				`;
+			case "user-info-box":
+				return css`
+					margin-top: 8rem;
+					margin-bottom: 3rem;
+				`;
+			case "user-detail-box":
+				return css`
+					display: flex;
+					-webkit-box-align: center;
+					align-items: center;
+				`;
 			default:
 				break;
 		}
