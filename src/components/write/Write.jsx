@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	__upPostWrite,
+	__postWrite,
+	__upDeleteWrite,
 	__deleteWrite,
 } from "../../redux/modules/wirte/writeSlice";
 import { Box, Input, Button } from "../../common";
@@ -25,7 +27,7 @@ function Write() {
 	const editorRef = useRef();
 	const params = useParams();
 	console.log(params);
-
+	let newid = null;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { write } = useSelector(state => state.write);
@@ -61,8 +63,9 @@ function Write() {
 		const formData = new FormData();
 		formData.append("images", blob);
 		try {
+			console.log(newid);
 			const response = await axios.post(
-				`${BASE_URL}/boards/${1}/images`,
+				`${BASE_URL}/boards/${newid}/images`,
 				formData,
 				{
 					headers: {
@@ -70,13 +73,30 @@ function Write() {
 					},
 				},
 			);
+
 			callback(response.data.data.imageUrl);
+			setInput(prev => {
+				return { ...prev, images: blob };
+			});
 		} catch (error) {}
 	};
 
 	useEffect(() => {
+		const getBoardId = async () => {
+			const { payload } = await dispatch(__postWrite());
+			console.log(payload.data.boardId);
+			newid = payload.data.boardId;
+			setInput(prev => {
+				return { ...prev, boardId: payload.data.boardId };
+			});
+		};
+
+		getBoardId();
+	}, []);
+
+	useEffect(() => {
 		if (isSubmit) {
-			dispatch(__upPostWrite(input));
+			dispatch(__upPostWrite(input)); // 출간하기
 			setIsSubmit(false);
 			navigate("/");
 		}
@@ -122,9 +142,9 @@ function Write() {
 					<Button
 						variant="write-left-btn"
 						type="button"
-						onClick={() => {
-							// dispatch(__deleteWrite());
-							navigate("/main/");
+						onClick={e => {
+							dispatch(__upDeleteWrite(input));
+							// navigate("/main/");
 						}}
 					>
 						← 나가기

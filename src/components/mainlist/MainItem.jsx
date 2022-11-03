@@ -25,6 +25,7 @@ const MainItem = ({ postData }) => {
 				<Flex height="100%" width="100%" fd="column" jc="space-between">
 					<Box variant="main-item-image">
 						<Image variant="main-item" src="/images/flower.jpg" />
+
 						<Box variant="main-content">
 							<SecondHeading variant="item-header">
 								{postData.title}

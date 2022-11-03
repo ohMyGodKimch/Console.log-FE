@@ -30,7 +30,6 @@ export const __postWrite = createAsyncThunk(
 				},
 			});
 			return thunkAPI.fulfillWithValue({
-				boardId: data.data.boardId,
 				data: data.data,
 			});
 		} catch (error) {
@@ -43,10 +42,10 @@ export const __upPostWrite = createAsyncThunk(
 	"upPostWrite",
 	async (payload, thunkAPI) => {
 		try {
-			const id = payload;
+			console.log(payload);
 			const jwtToken = localStorage.getItem("jwtToken");
 			const reponse = await axios.put(
-				`${BASE_URL}/boards/write/${payload.id}`,
+				`${BASE_URL}/boards/write/${payload.boardId}`,
 				payload,
 				{
 					headers: {
@@ -55,8 +54,29 @@ export const __upPostWrite = createAsyncThunk(
 					},
 				},
 			);
-			console.log(id);
-			console.log(reponse);
+			return thunkAPI.fulfillWithValue(reponse.data.headers);
+		} catch (error) {
+			return thunkAPI.rejectWithValue(error.data);
+		}
+	},
+);
+
+export const __upDeleteWrite = createAsyncThunk(
+	"upDeleteWrite",
+	async (payload, thunkAPI) => {
+		try {
+			console.log(payload);
+			const jwtToken = localStorage.getItem("jwtToken");
+			const reponse = await axios.delete(
+				`${BASE_URL}/boards/write/${payload.boardId}`,
+
+				{
+					headers: {
+						Authorization: jwtToken,
+						"Content-Type": "application/json",
+					},
+				},
+			);
 			return thunkAPI.fulfillWithValue(reponse.data.headers);
 		} catch (error) {
 			return thunkAPI.rejectWithValue(error.data);
@@ -181,7 +201,7 @@ export const writeSlice = createSlice({
 		},
 		[__deleteWrite.fulfilled]: (state, action) => {
 			state.isLoading = false;
-			state.write.filter(state => state.id !== action.payload);
+			state.write = action.payload;
 		},
 		[__deleteWrite.rejected]: state => {
 			state.isLoading = false;
@@ -193,7 +213,19 @@ export const writeSlice = createSlice({
 			state.isLoading = false;
 			state.write.push = action.payload;
 		},
-		[__putWrite.rejected]: state => {},
+		[__putWrite.rejected]: state => {
+			state.isLoading = false;
+		},
+		[__upDeleteWrite.pending]: state => {
+			state.isLoading = true;
+		},
+		[__upDeleteWrite.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.write = action.payload;
+		},
+		[__upDeleteWrite.rejected]: state => {
+			state.isLoading = false;
+		},
 		// 좋아요
 		[__addLike.pending]: state => {
 			console.log("__addLike.pending");

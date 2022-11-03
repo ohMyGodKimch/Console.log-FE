@@ -53,9 +53,7 @@ const MainNav = () => {
 											<>
 												<Button
 													variant="new-post"
-													onClick={() => {
-														const test = dispatch(__postWrite());
-														console.log(test);
+													onClick={async () => {
 														navigate(`/boards/`);
 													}}
 												>
