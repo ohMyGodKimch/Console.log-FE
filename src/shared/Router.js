@@ -5,8 +5,6 @@ import { Mypage } from "../pages/mypage";
 import { EditPage } from "../pages/edit";
 import MainListPage from "../pages/mainlist";
 import UpdatePage from "./../pages/update/UpdatePage";
-import { Like } from "../components/like";
-import { CommentList } from "../components/comment";
 
 const Router = () => {
 	return (
@@ -19,8 +17,6 @@ const Router = () => {
 					<Route path="/mypage/:id" element={<Mypage />} />
 					<Route path="/edit/:id" element={<EditPage />} />
 					<Route path="/update/:id" element={<UpdatePage />} />
-					<Route path="/like" element={<Like />} />
-					<Route path="/comment" element={<CommentList />} />
 				</Routes>
 			</BrowserRouter>
 		</>

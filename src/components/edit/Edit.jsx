@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { __deleteWrite } from "../../redux/modules/wirte/writeSlice";
 import { useEffect, useState } from "react";
 import { Box, Text, Button } from "../../common";
-import { CommentList } from "../../components/comment";
+import { Comment } from "../../components/comment";
 import { Like } from "../../components/like";
 
 function Edit() {
@@ -71,7 +71,7 @@ function Edit() {
 				<Box variant="tag-box">내용</Box>
 			</Box>
 			{/* comment part */}
-			<CommentList />
+			<Comment />
 			{/* like part */}
 			<Like boardId={id} />
 		</>

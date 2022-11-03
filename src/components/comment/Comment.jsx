@@ -12,7 +12,7 @@ import {
 	Hidden,
 } from "../../common";
 
-const CommentList = () => {
+const Comment = () => {
 	return (
 		<Box variant="comment-wrap">
 			<SecondHeading variant="comment-header">n개의 댓글</SecondHeading>
@@ -63,4 +63,4 @@ const CommentList = () => {
 	);
 };
 
-export default CommentList;
+export default Comment;
