@@ -28,15 +28,8 @@ const SignUpForm = ({ isSignUpClick, setIsSignUpClick }) => {
 	// Redux dispatcer
 	const dispatch = useDispatch();
 	// Redux state
-	const {
-		isCheckedNickname,
-		isCheckedId,
-		isExistId,
-		isExistNickname,
-		isSignUp,
-	} = useSelector(state => state.join);
-
-	console.log("isSignUp => ", isSignUp);
+	const { isCheckedNickname, isCheckedId, isExistId, isExistNickname } =
+		useSelector(state => state.join);
 
 	// React Hook Form
 	const {

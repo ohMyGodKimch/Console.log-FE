@@ -18,16 +18,13 @@ function Edit() {
 	const { id } = useParams();
 	// 디테일 페이지 게시물 정보
 	const { write, boardItem } = useSelector(state => state.write);
-	console.log("write =>", write);
+
 	// id, boardItem 변경시 실행
 	const { mainList } = useSelector(state => state.mainlist);
 	let detail = null;
 	if (mainList && mainList.length > 0) {
 		const myData = mainList.find(myData => myData.boardId === parseInt(id));
-		// console.log(myData);
-		console.log(myData);
 		detail = myData;
-		// console.log(detail);
 	}
 
 	useEffect(() => {
